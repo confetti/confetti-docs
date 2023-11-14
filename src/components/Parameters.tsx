@@ -1,9 +1,9 @@
 function HeaderRow() {
   return (
     <thead>
-      <th>URL Parameter</th>
+      <th>Parameter</th>
       <th>Default</th>
-      <th>Values/Description</th>
+      <th>Values / Description</th>
     </thead>
   )
 }
@@ -37,18 +37,22 @@ const queryValues = (filter) => {
       </>
     )
   })
-  // return <>values.map(', ')</>
 }
 
 const queryDefaultValue = (filter) => {
   if (Array.isArray(filter.default)) {
-    return filter.default.join(', ')
+    return filter.default.map((value) => (
+      <>
+        <code>{value}</code>{' '}
+      </>
+    ))
   } else {
     return filter.default
   }
 }
 
 function Filters({ filters }: { filters: any }) {
+  console.log(filters)
   if (!filters || Object.keys(filters).length === 0) return null
   return (
     <>

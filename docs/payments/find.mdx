@@ -1,0 +1,36 @@
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+import CodeBlock from '@theme/CodeBlock'
+import confetti from 'confetti'
+
+# Find one
+
+<Tabs>
+  <TabItem value="javascript" label="JavaScript" default>
+
+    ```js  
+    const Confetti = require('confetti')
+
+    const confetti = new Confetti({ apiKey: 'your-key' })
+    const ticket = await confetti.payments.find(2)
+    ```
+    <CodeBlock language="javascript" title="Result">
+      {`${JSON.stringify(confetti.models.payment.sample.single.formatted, null, 2)}`}
+    </CodeBlock>
+
+  </TabItem>
+  <TabItem value="curl" label="curl">
+
+    ```shell
+    curl "https://api.confetti.events/payments/2"
+      -H "Authorization: apikey your-key"
+    ```
+
+    <CodeBlock language="javascript" title="Result">
+      {`${JSON.stringify(confetti.models.payment.sample.single.raw, null, 2)}`}
+    </CodeBlock>
+    
+  </TabItem>
+</Tabs>
+
+

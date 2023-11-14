@@ -1,0 +1,39 @@
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+import CodeBlock from '@theme/CodeBlock'
+import confetti from 'confetti'
+import Parameters from '@site/src/components/Parameters'
+
+# Find all
+
+<Parameters model={confetti.models.webhook} />
+
+<Tabs>
+  <TabItem value="javascript" label="JavaScript" default>
+
+    ```js  
+    const Confetti = require('confetti')
+
+    const confetti = new Confetti({ apiKey: 'your-key' })
+    const webhooks = await confetti.webhooks.findAll()
+    ```
+    <CodeBlock language="javascript" title="Result">
+      {`${JSON.stringify(confetti.models.webhook.sample.multiple.formatted, null, 2)}`}
+    </CodeBlock>
+
+  </TabItem>
+  <TabItem value="curl" label="cUrl">
+
+    ```shell
+    curl "https://api.confetti.events/webhooks"
+      -H "Authorization: apikey your-key"
+    ```
+
+    <CodeBlock language="javascript" title="Result">
+      {`${JSON.stringify(confetti.models.webhook.sample.multiple.raw, null, 2)}`}
+    </CodeBlock>
+    
+  </TabItem>
+</Tabs>
+
+

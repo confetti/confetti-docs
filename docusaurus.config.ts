@@ -6,7 +6,7 @@ import webpack from 'webpack'
 const config: Config = {
   title: 'Confetti API Documentation',
   tagline: 'Make events easier.',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.png',
 
   // Set the production url of your site here
   url: 'https://docs.confetti.events',
@@ -40,14 +40,12 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/confetti/confetti-docs',
         },
-        blog: false,
-        // blog: {
-        //   showReadingTime: true,
-        //   // Please change this to your repo.
-        //   // Remove this to remove the "edit this page" links.
-        //   editUrl:
-        //     'https://github.com/confetti/confetti-docs',
-        // },
+        blog: {
+          showReadingTime: true,
+          // Please change this to your repo.
+          // Remove this to remove the "edit this page" links.
+          editUrl: 'https://github.com/confetti/confetti-docs',
+        },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -62,7 +60,7 @@ const config: Config = {
       title: 'Confetti API',
       logo: {
         alt: 'Confetti Logo',
-        src: 'img/logo.svg',
+        src: 'img/favicon.png',
       },
       items: [
         {
@@ -71,9 +69,9 @@ const config: Config = {
           position: 'left',
           label: 'Documentation',
         },
-        // { to: '/blog', label: 'Blog', position: 'left' },
+        { to: '/changelog', label: 'Changelog', position: 'left' },
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/confetti/confetti-docs',
           label: 'GitHub',
           position: 'right',
         },
@@ -83,37 +81,37 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
-          items: [
-            {
-              label: 'Tutorial',
-              to: '/docs/intro',
-            },
-          ],
-        },
-        {
-          title: 'Community',
+          // title: 'Support',
           items: [
             {
               label: 'Help Center',
               href: 'https://support.confetti.events',
             },
+          ],
+        },
+        {
+          // title: 'More',
+          items: [
             {
-              label: 'Confetti.events',
-              href: 'https://confetti.events',
+              label: 'GitHub',
+              href: 'https://github.com/confetti/confetti-docs',
             },
           ],
         },
         {
-          title: 'More',
+          // title: 'Docs',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
+              label: 'Confetti Node.js wrapper',
+              href: 'https://github.com/confetti/confetti-node',
             },
+          ],
+        },
+        {
+          items: [
             {
-              label: 'GitHub',
-              href: 'https://github.com/confetti/confetti-docs',
+              label: 'Confetti.events',
+              href: 'https://confetti.events',
             },
           ],
         },

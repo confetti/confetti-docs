@@ -52,7 +52,6 @@ const queryDefaultValue = (filter) => {
 }
 
 function Filters({ filters }: { filters: any }) {
-  console.log(filters)
   if (!filters || Object.keys(filters).length === 0) return null
   return (
     <>

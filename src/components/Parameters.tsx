@@ -67,24 +67,36 @@ function Filters({ filters }: { filters: any }) {
   )
 }
 
-export default function Parameters({ model }: { model: any }) {
+export default function Parameters({
+  model,
+  includeOnly,
+}: {
+  model: any
+  includeOnly?: boolean
+}) {
   return (
     <table>
       <HeaderRow />
-      <Filters filters={model.filters} />
-      <Row
-        name="page[size]"
-        defaultValue="50"
-        description="Maximum number of results"
-      />
-      <Row name="page[number]" defaultValue="1" description="Page number" />
+      {!includeOnly && (
+        <>
+          <Filters filters={model.filters} />
+          <Row
+            name="page[size]"
+            defaultValue="50"
+            description="Maximum number of results"
+          />
+          <Row name="page[number]" defaultValue="1" description="Page number" />
+        </>
+      )}
       {model.includes && (
         <Row
           name="include"
           defaultValue=""
-          description={model.includes
-            .map((i: string) => <code>{i}</code>)
-            .join(', ')}
+          description={model.includes.map((i: string) => (
+            <>
+              <code>{i}</code>{' '}
+            </>
+          ))}
         />
       )}
     </table>

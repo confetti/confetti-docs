@@ -1,0 +1,39 @@
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+import CodeBlock from '@theme/CodeBlock'
+import confetti from 'confetti'
+import Parameters from '@site/src/components/Parameters'
+
+# Find one
+
+<Parameters model={confetti.models.event} includeOnly={true} />
+
+<Tabs>
+  <TabItem value="javascript" label="JavaScript" default>
+
+    ```js  
+    const Confetti = require('confetti')
+
+    const confetti = new Confetti({ apiKey: 'your-key' })
+    const event = await confetti.events.find(2)
+    ```
+    <CodeBlock language="javascript" title="Result">
+      {`${JSON.stringify(confetti.models.event.sample.single.formatted, null, 2)}`}
+    </CodeBlock>
+
+  </TabItem>
+  <TabItem value="curl" label="cUrl">
+
+    ```shell
+    curl "https://api.confetti.events/events/2"
+      -H "Authorization: apikey your-key"
+    ```
+
+    <CodeBlock language="javascript" title="Result">
+      {`${JSON.stringify(confetti.models.event.sample.single.raw, null, 2)}`}
+    </CodeBlock>
+    
+  </TabItem>
+</Tabs>
+
+

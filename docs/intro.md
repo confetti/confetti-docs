@@ -2,46 +2,30 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Introduction
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Welcome to the Confetti API reference. The easist way to access the API is via our [offical Node.js wrapper](http://github.com/confetti/confetti-node).
 
-## Getting Started
+# Authentication
 
-Get started by **creating a new site**.
+### JavaScript
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
-
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
+```javascript
+const Confetti = require('confetti')
+const confetti = new Confetti({ apiKey: 'your-key' })
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+### curl
 
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
+```shell
+curl "https://api.confetti.events"
+  -H "Authorization: apikey your-key"
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+> Make sure to replace `your-key` with your API key.
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+Confetti uses API keys to allow access to the API. You can create a new API key via your Workspace > Settings > API & Webhooks
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+Confetti expects for the API key to be included in all API requests to the server in a header that looks like the following:
+
+`Authorization: apikey your-key`

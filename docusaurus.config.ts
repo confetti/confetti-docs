@@ -1,7 +1,7 @@
 import { themes as prismThemes } from 'prism-react-renderer'
 import type { Config } from '@docusaurus/types'
 import type * as Preset from '@docusaurus/preset-classic'
-import webpack from 'webpack'
+const { ProvidePlugin } = require('webpack')
 
 const config: Config = {
   title: 'Confetti API Documentation',
@@ -137,8 +137,8 @@ const config: Config = {
             },
           },
           plugins: [
-            new webpack.ProvidePlugin({
-              process: 'process/browser',
+            new ProvidePlugin({
+              process: require.resolve('process/browser'),
             }),
           ],
         }

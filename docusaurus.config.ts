@@ -18,6 +18,7 @@ const config: Config = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'confetti', // Usually your GitHub org/user name.
   projectName: 'confetti-docs', // Usually your repo name.
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',

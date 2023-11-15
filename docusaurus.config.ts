@@ -5,7 +5,7 @@ import webpack from 'webpack'
 
 const config: Config = {
   title: 'Confetti API Documentation',
-  tagline: 'Make events easier.',
+  // tagline: 'Make events easier.',
   favicon: 'img/favicon.png',
 
   // Set the production url of your site here
@@ -40,12 +40,13 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/confetti/confetti-docs',
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/confetti/confetti-docs',
-        },
+        blog: false,
+        // blog: {
+        //   showReadingTime: true,
+        //   // Please change this to your repo.
+        //   // Remove this to remove the "edit this page" links.
+        //   editUrl: 'https://github.com/confetti/confetti-docs',
+        // },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -69,7 +70,7 @@ const config: Config = {
           position: 'left',
           label: 'Documentation',
         },
-        { to: '/changelog', label: 'Changelog', position: 'left' },
+        // { to: '/changelog', label: 'Changelog', position: 'left' },
         {
           href: 'https://github.com/confetti/confetti-docs',
           label: 'GitHub',

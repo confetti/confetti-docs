@@ -57,7 +57,9 @@ function Filters({ filters }: { filters: any }) {
     <>
       {Object.keys(filters).map((filterName) => {
         const filter = filters[filterName]
-        const name = filter.required ? filterName + '*' : filterName
+        const name = filter.required
+          ? `filter[${filterName}]` + '*'
+          : `filter[${filterName}]`
         return (
           <Row
             name={name}

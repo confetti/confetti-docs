@@ -57,7 +57,7 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/social-card.png',
+    image: 'img/social-card.jpg',
     navbar: {
       title: 'Confetti API',
       logo: {

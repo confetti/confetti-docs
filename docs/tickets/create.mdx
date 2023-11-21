@@ -1,0 +1,67 @@
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+import CodeBlock from '@theme/CodeBlock'
+import confetti from 'confetti'
+import Parameters from '@site/src/components/Parameters'
+
+# Create
+
+<Parameters model={confetti.models.ticket} isCreateOrUpdate={true} />
+
+<Tabs>
+  <TabItem value="javascript" label="JavaScript" default>
+
+    ```js
+    const Confetti = require('confetti')
+
+    const confetti = new Confetti({ apiKey: 'your-key' })
+    const data = await confetti.tickets.create({
+      eventId: 16969,
+      ticketBatchId: 16090,
+      firstName: 'Foo',
+      lastName: 'Bar',
+      phone: '+46700000000',
+      status: 'attending',
+      email: 'foo@bar.com',
+      comment: 'Foo and bar',
+      sendEmailConfirmation: true,
+    })
+    ```
+
+  </TabItem>
+  <TabItem value="curl" label="curl">
+    ```shell
+    curl -X POST "https://api.confetti.events/tickets"
+    -H "Content-Type: application/json"
+    -H "Authorization: apikey your-key"
+    -d '{
+      "data": {
+        "type": "ticket",
+        "attributes": {
+          "firstName": "Foo",
+          "lastName": "Bar",
+          "phone": "+46700000000",
+          "status": "attending",
+          "email": "foo@bar.se",
+          "comment": "Foo and bar"
+        },
+          "meta": {
+            "sendEmailConfirmation": true
+          },
+          "relationships": {
+            "event": {
+              "data": {
+                "id": "16969"
+              }
+            }
+            "ticketBatch": {
+              "data": {
+                "id": "16090"
+              }
+            }
+          }
+        }
+      }'
+    ```
+  </TabItem>
+</Tabs>

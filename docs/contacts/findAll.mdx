@@ -1,0 +1,44 @@
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+import CodeBlock from '@theme/CodeBlock'
+import confetti from 'confetti'
+import Parameters from '@site/src/components/Parameters'
+
+# Find all
+
+<Parameters model={confetti.models.contact} />
+
+<Tabs>
+  <TabItem value="javascript" label="JavaScript" default>
+
+    ```js  
+    const Confetti = require('confetti')
+
+    const confetti = new Confetti({ apiKey: 'your-key' })
+    const contacts = await confetti.contacts.findAll({
+      page: {
+        size: 50,
+        number: 1
+      }
+    })
+    ```
+    <CodeBlock language="javascript" title="Result">
+      {`${JSON.stringify(confetti.models.contact.sample.multiple.formatted, null, 2)}`}
+    </CodeBlock>
+
+  </TabItem>
+  <TabItem value="curl" label="curl">
+
+    ```shell
+    curl "https://api.confetti.events/contacts?page[number]=1&page[size]=50"
+      -H "Authorization: apikey your-key"
+    ```
+
+    <CodeBlock language="javascript" title="Result">
+      {`${JSON.stringify(confetti.models.contact.sample.multiple.raw, null, 2)}`}
+    </CodeBlock>
+    
+  </TabItem>
+</Tabs>
+
+

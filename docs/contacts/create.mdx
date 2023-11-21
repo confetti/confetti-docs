@@ -1,0 +1,54 @@
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+import CodeBlock from '@theme/CodeBlock'
+import confetti from 'confetti'
+import Parameters from '@site/src/components/Parameters'
+
+# Create
+
+<Parameters model={confetti.models.contact} isCreateOrUpdate={true} />
+
+<Tabs>
+  <TabItem value="javascript" label="JavaScript" default>
+    ```js
+    const Confetti = require('confetti')
+
+    const confetti = new Confetti({ apiKey: 'your-key' })
+    const data = await confetti.contacts.create({
+      firstName: 'Foo',
+      lastName: 'Bar',
+      email: 'foo@bar.se',
+      phone: '+46700000000',
+      comment: 'Foo bar',
+      categoryIds: [1, 2],
+    })
+    ```
+  </TabItem>
+  <TabItem value="curl" label="curl">
+    ```shell
+    curl -X POST "https://api.confetti.events/contacts"
+    -H "Content-Type: application/json"
+    -H "Authorization: apikey your-key"
+    -d '{
+      "data": {
+        "type": "contact",
+        "attributes": {
+          "firstName": "Foo",
+          "lastName": "Bar",
+          "email": "foo@bar.se",
+          "phone": "+46700000000",
+          "comment": "Foo bar"
+        },
+          "relationships": {
+            "categories": {
+              "data": [
+                { "id": "1" },
+                { "id": "2" }
+              ]
+            }
+          }
+        }
+      }'
+    ```
+  </TabItem>
+</Tabs>

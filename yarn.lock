@@ -3168,10 +3168,10 @@ concat-map@0.0.1:
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-confetti@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/confetti/-/confetti-2.0.1.tgz"
-  integrity sha512-F0wXuvK12ZjKMcrKWseNnQrTIIxqn1NG+YNOeP+AgGUEFk9ALgF5k7+H0DQMzQgOZhMYQbpop5J0Wq9pFaRIuA==
+confetti@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/confetti/-/confetti-2.0.2.tgz"
+  integrity sha512-O99YipUJTAXfquY9t+xHx62rkQC6ZmZXWH9FvTibEWoAu1NfsUY/JxZSpTGpJcKppRoHoMZfOPZe71yVI6s5Xg==
   dependencies:
     node-fetch "^2.7.0"
     qs "^6.11.2"

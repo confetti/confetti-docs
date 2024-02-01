@@ -1,18 +1,12 @@
-@font-face {
-  font-family: 'Source Sans 3';
-  font-weight: 200 900;
-  font-style: normal;
-  font-stretch: normal;
-  src: url('../../static/fonts/SourceSans3VF-Roman.ttf.woff2') format('woff2'),
-    url('../../static/fonts/SourceSans3VF-Roman.ttf.woff') format('woff');
-}
+@import url('//d2wd18kp3k18ix.cloudfront.net/default-fonts/source-sans.css');
+
 
 :root {
   --color-blue: #00c2db;
   --color-blue-95: #01444d;
   --color-blue-98: #00353c;
 
-  --ifm-font-family-base: 'Source Sans 3';
+  --ifm-font-family-base: 'Source Sans 3 VF';
   --ifm-color-content: var(--color-blue-95);
   --ifm-heading-color: var(--color-blue-98);
 

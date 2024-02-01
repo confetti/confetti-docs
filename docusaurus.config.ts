@@ -126,6 +126,7 @@ const config: Config = {
   } satisfies Preset.ThemeConfig,
 
   plugins: [
+    'docusaurus-plugin-sass',
     () => ({
       name: 'confetti-node-dependency-fix',
       configureWebpack(config) {

@@ -49,7 +49,7 @@ const config: Config = {
         //   editUrl: 'https://github.com/confetti/confetti-docs',
         // },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: './src/css/custom.scss',
         },
       } satisfies Preset.Options,
     ],

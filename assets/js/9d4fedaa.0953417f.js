@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkconfetti_docs=self.webpackChunkconfetti_docs||[]).push([[301],{3769:e=>{e.exports=JSON.parse('{"name":"docusaurus-plugin-content-docs","id":"default"}')}}]);

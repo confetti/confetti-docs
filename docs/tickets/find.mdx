@@ -2,8 +2,11 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 import CodeBlock from '@theme/CodeBlock'
 import confetti from 'confetti'
+import Parameters from '@site/src/components/Parameters'
 
 # Find one
+
+<Parameters model={confetti.models.ticket} includeOnly={true} />
 
 <Tabs>
   <TabItem value="javascript" label="JavaScript" default>

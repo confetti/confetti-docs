@@ -3339,14 +3339,15 @@ concat-map@0.0.1:
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-confetti@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.npmjs.org/confetti/-/confetti-2.0.6.tgz"
-  integrity sha512-DgXPvRlFqWK2U9AmQLKJHFBI4rhMLgoSoscLbcLubc1Yn3I9tBqbhUAX3oc+4zMsMGGlOlT7I7DcT4JR+KyG+g==
+confetti@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/confetti/-/confetti-3.0.4.tgz"
+  integrity sha512-AYekRda0DlnFT9D8SBMUNifqGlXakRhsndAfwyi/F+1NoFuCUXIW64s1mUzG2iawgymszc1xeriVN/NoIHOY8w==
   dependencies:
-    node-fetch "^2.7.0"
-    qs "^6.11.2"
+    node-fetch "^3.3.2"
+    qs "^6.14.0"
     yayson "^3.0.0"
+    zod "^4.1.11"
 
 config-chain@^1.1.11:
   version "1.1.13"
@@ -7455,7 +7456,14 @@ pupa@^3.1.0:
   dependencies:
     escape-goat "^4.0.0"
 
-qs@^6.11.2, qs@6.13.0:
+qs@^6.14.0:
+  version "6.14.2"
+  resolved "https://registry.npmjs.org/qs/-/qs-6.14.2.tgz"
+  integrity sha512-V/yCWTTF7VJ9hIh18Ugr2zhJMP01MY7c5kh4J870L7imm6/DIzBsNLTXzMwUA3yZ5b/KBqLx8Kp3uRvd7xSe3Q==
+  dependencies:
+    side-channel "^1.1.0"
+
+qs@6.13.0:
   version "6.13.0"
   resolved "https://registry.npmjs.org/qs/-/qs-6.13.0.tgz"
   integrity sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==
@@ -8276,7 +8284,7 @@ side-channel-weakmap@^1.0.2:
     object-inspect "^1.13.3"
     side-channel-map "^1.0.1"
 
-side-channel@^1.0.6:
+side-channel@^1.0.6, side-channel@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/side-channel/-/side-channel-1.1.0.tgz"
   integrity sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==
@@ -9224,6 +9232,11 @@ yocto-queue@^1.0.0:
   version "1.1.1"
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-1.1.1.tgz"
   integrity sha512-b4JR1PFR10y1mKjhHY9LaGo6tmrgjit7hxVIeAmyMw3jegXR4dhYqLaQF5zMXZxY7tLpMyJeLjr1C4rLmkVe8g==
+
+zod@^4.1.11:
+  version "4.3.6"
+  resolved "https://registry.npmjs.org/zod/-/zod-4.3.6.tgz"
+  integrity sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==
 
 zwitch@^2.0.0:
   version "2.0.4"

@@ -19,7 +19,8 @@
     "@docusaurus/preset-classic": "^3.1.1",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^1.2.1",
-    "confetti": "^2.0.6",
+    "confetti": "^3.0.4",
+    "node-fetch": "^2.7.0",
     "docusaurus-plugin-sass": "^0.2.5",
     "prism-react-renderer": "^2.1.0",
     "process": "^0.11.10",
@@ -27,6 +28,12 @@
     "react-dom": "^18.0.0",
     "sass": "^1.70.0",
     "util": "^0.12.5"
+  },
+  "overrides": {
+    "node-fetch": "^2.7.0"
+  },
+  "resolutions": {
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.1.1",

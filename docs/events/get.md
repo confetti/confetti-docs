@@ -2,7 +2,9 @@
 outline: deep
 ---
 
-# Find One Event
+# Get Event
+
+<ApiEndpoint method="GET" path="/events/:id" />
 
 Retrieve a single event by its ID.
 
@@ -17,7 +19,7 @@ Retrieve a single event by its ID.
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 

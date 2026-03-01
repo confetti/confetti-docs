@@ -3,21 +3,24 @@ layout: home
 
 hero:
   name: Confetti API
-  text: Event integrations made simple
-  tagline: Build powerful automations on top of the Confetti event management platform with a clean, RESTful JSON:API.
+  text: Build event integrations
+  tagline: Access events, tickets, contacts, and more through a clean RESTful API with official SDK support.
   actions:
     - theme: brand
       text: Get Started
-      link: /guide/
+      link: /docs/
     - theme: alt
-      text: View on GitHub
-      link: https://github.com/confetti/confetti-docs
+      text: Node.js SDK
+      link: https://github.com/confetti/confetti-node
 
 features:
-  - title: RESTful JSON:API
-    details: Access events, tickets, contacts, payments, and webhooks through a predictable, standards-based REST interface.
-  - title: Node.js SDK
-    details: Get up and running in minutes with the official Node.js wrapper — simple, lightweight, and ready to go.
-  - title: Webhooks & Zapier
-    details: React to real-time events with webhooks, or connect Confetti to 1 000+ apps via the Zapier integration.
+  - icon: 🌐
+    title: RESTful JSON:API
+    details: Standards-based REST interface for events, tickets, contacts, payments, and webhooks.
+  - icon: ⚡
+    title: Node.js SDK
+    details: Get up and running in minutes with the official SDK — handles auth, pagination, and response formatting.
+  - icon: 🔗
+    title: Webhooks & Zapier
+    details: React to real-time events with webhooks or connect to 1,000+ apps via the Zapier integration.
 ---

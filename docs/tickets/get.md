@@ -2,7 +2,9 @@
 outline: deep
 ---
 
-# Find One Ticket
+# Get Ticket
+
+<ApiEndpoint method="GET" path="/tickets/:id" />
 
 Retrieve a single ticket by its ID.
 
@@ -17,7 +19,7 @@ Retrieve a single ticket by its ID.
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 

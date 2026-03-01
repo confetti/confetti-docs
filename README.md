@@ -37,7 +37,7 @@ The site will be available at `http://localhost:5173`.
 
 ### Doc Generation
 
-The API reference pages (everything under `guide/events/`, `guide/tickets/`, etc.) are **auto-generated** from the [`confetti`](https://github.com/confetti/confetti-node) npm package by the build script `scripts/generate-docs.mjs`.
+The API reference pages (everything under `docs/events/`, `docs/tickets/`, etc.) are **auto-generated** from the [`confetti`](https://github.com/confetti/confetti-node) npm package by the build script `scripts/generate-docs.ts`.
 
 This script runs automatically before every `docs:dev` and `docs:build`. It reads model metadata (sample responses, filters, includes, create attributes) from the package and outputs clean VitePress markdown with parameter tables, code examples, and JSON response samples.
 
@@ -45,7 +45,7 @@ If the `confetti` package is updated with new fields or models, just run `npm ru
 
 ### Static Content
 
-The introduction page (`guide/index.md`) and homepage (`index.md`) are written by hand and not auto-generated.
+The introduction page (`docs/index.md`) and homepage (`index.md`) are written by hand and not auto-generated.
 
 ## Deployment
 
@@ -77,9 +77,11 @@ The build also generates `/llms.txt` and `/llms-full.txt` via [vitepress-plugin-
   theme/
     index.ts              Theme entry — extends default theme
     custom.css            Source Sans 3 font, Confetti brand colors
+    components/
+      ApiEndpoint.vue     Styled HTTP method + endpoint display
 scripts/
-  generate-docs.mjs       Generates API docs from the confetti npm package
-guide/
+  generate-docs.ts        Generates API docs from the confetti npm package
+docs/
   index.md                Introduction & authentication (hand-written)
   events/                 Auto-generated endpoint docs
   tickets/                  ↓
@@ -89,7 +91,7 @@ guide/
   workspace/                ↓
 public/
   CNAME                   Custom domain for GitHub Pages
-  favicon.png             Site favicon
   confetti-logo.svg       Navbar logo
 index.md                  Homepage (hero + features)
+tsconfig.json             TypeScript configuration
 ```

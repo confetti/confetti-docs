@@ -2,17 +2,18 @@
 outline: deep
 ---
 
-# Find One Contact
+# Get Contact
+
+<ApiEndpoint method="GET" path="/contacts/:id" />
 
 Retrieve a single contact by its ID.
-
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 

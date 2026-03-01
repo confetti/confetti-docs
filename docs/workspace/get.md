@@ -2,17 +2,18 @@
 outline: deep
 ---
 
-# Find One Workspace
+# Get Workspace
+
+<ApiEndpoint method="GET" path="/workspaces/:id" />
 
 Retrieve a single workspace by its ID.
-
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 

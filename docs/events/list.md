@@ -2,7 +2,9 @@
 outline: deep
 ---
 
-# Find All Events
+# List Events
+
+<ApiEndpoint method="GET" path="/events" />
 
 Retrieve a paginated list of events.
 
@@ -16,25 +18,20 @@ Retrieve a paginated list of events.
 | `page[number]` | `1` | Page number |
 | `include` |  | `categories`, `pages`, `pages.blocks`, `pages.blocks.images`, `schedule-items`, `speakers`, `speakers.image`, `organisers`, `organisers.image` |
 
-> Parameters marked with **\*** are required.
+> Fields marked with **\*** are required.
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
 const events = await confetti.events.findAll({
-  filter: {
-    signupType: 'rsvp',
-  },
-  page: {
-    size: 10,
-    number: 1,
-  },
+  filter: { signupType: 'rsvp' },
+  page: { size: 10, number: 1 },
 })
 ```
 

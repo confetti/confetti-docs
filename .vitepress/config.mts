@@ -20,15 +20,15 @@ export default defineConfig({
     ],
   ],
 
-  // Clean URLs without .html extension
   cleanUrls: true,
+  lastUpdated: true,
 
   themeConfig: {
     logo: '/confetti-logo.svg',
     siteTitle: 'Confetti API',
 
     nav: [
-      { text: 'Docs', link: '/guide/' },
+      { text: 'Docs', link: '/docs/' },
       {
         text: 'Resources',
         items: [
@@ -50,58 +50,58 @@ export default defineConfig({
     ],
 
     sidebar: {
-      '/guide/': [
+      '/docs/': [
         {
           text: 'Getting Started',
-          items: [{ text: 'Introduction', link: '/guide/' }],
+          items: [{ text: 'Introduction', link: '/docs/' }],
         },
         {
           text: 'Events',
           collapsed: false,
           items: [
-            { text: 'Find All', link: '/guide/events/find-all' },
-            { text: 'Find One', link: '/guide/events/find-one' },
+            { text: 'List Events', link: '/docs/events/list' },
+            { text: 'Get Event', link: '/docs/events/get' },
           ],
         },
         {
           text: 'Tickets',
           collapsed: false,
           items: [
-            { text: 'Find All', link: '/guide/tickets/find-all' },
-            { text: 'Find One', link: '/guide/tickets/find-one' },
-            { text: 'Create', link: '/guide/tickets/create' },
-          ],
-        },
-        {
-          text: 'Payments',
-          collapsed: false,
-          items: [
-            { text: 'Find All', link: '/guide/payments/find-all' },
-            { text: 'Find One', link: '/guide/payments/find-one' },
-          ],
-        },
-        {
-          text: 'Webhooks',
-          collapsed: false,
-          items: [
-            { text: 'Find All', link: '/guide/webhooks/find-all' },
-            { text: 'Find One', link: '/guide/webhooks/find-one' },
-          ],
-        },
-        {
-          text: 'Workspace',
-          collapsed: false,
-          items: [
-            { text: 'Find One', link: '/guide/workspace/find-one' },
+            { text: 'List Tickets', link: '/docs/tickets/list' },
+            { text: 'Get Ticket', link: '/docs/tickets/get' },
+            { text: 'Create Ticket', link: '/docs/tickets/create' },
           ],
         },
         {
           text: 'Contacts',
           collapsed: false,
           items: [
-            { text: 'Find All', link: '/guide/contacts/find-all' },
-            { text: 'Find One', link: '/guide/contacts/find-one' },
-            { text: 'Create', link: '/guide/contacts/create' },
+            { text: 'List Contacts', link: '/docs/contacts/list' },
+            { text: 'Get Contact', link: '/docs/contacts/get' },
+            { text: 'Create Contact', link: '/docs/contacts/create' },
+          ],
+        },
+        {
+          text: 'Payments',
+          collapsed: false,
+          items: [
+            { text: 'List Payments', link: '/docs/payments/list' },
+            { text: 'Get Payment', link: '/docs/payments/get' },
+          ],
+        },
+        {
+          text: 'Webhooks',
+          collapsed: false,
+          items: [
+            { text: 'List Webhooks', link: '/docs/webhooks/list' },
+            { text: 'Get Webhook', link: '/docs/webhooks/get' },
+          ],
+        },
+        {
+          text: 'Workspace',
+          collapsed: false,
+          items: [
+            { text: 'Get Workspace', link: '/docs/workspace/get' },
           ],
         },
       ],

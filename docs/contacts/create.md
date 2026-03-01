@@ -4,11 +4,13 @@ outline: deep
 
 # Create Contact
 
+<ApiEndpoint method="POST" path="/contacts" />
+
 Create a new contact.
 
-## Parameters
+## Attributes
 
-| Parameter | Type | Description |
+| Attribute | Type | Description |
 | --- | --- | --- |
 | `firstName` | string |  |
 | `lastName` | string |  |
@@ -19,14 +21,14 @@ Create a new contact.
 | `categoryIds` | array | Attach categories to your contact. |
 | `workspaceId` * | number |  |
 
-> Parameters marked with **\*** are required.
+> Fields marked with **\*** are required.
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 

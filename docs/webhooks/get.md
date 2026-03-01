@@ -2,17 +2,18 @@
 outline: deep
 ---
 
-# Find One Webhook
+# Get Webhook
+
+<ApiEndpoint method="GET" path="/webhooks/:id" />
 
 Retrieve a single webhook by its ID.
-
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 

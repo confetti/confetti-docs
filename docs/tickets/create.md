@@ -4,11 +4,13 @@ outline: deep
 
 # Create Ticket
 
+<ApiEndpoint method="POST" path="/tickets" />
+
 Create a new ticket.
 
-## Parameters
+## Attributes
 
-| Parameter | Type | Description |
+| Attribute | Type | Description |
 | --- | --- | --- |
 | `eventId` * | number |  |
 | `ticketBatchId` | number | Required for ticket events |
@@ -21,14 +23,14 @@ Create a new ticket.
 | `comment` | string |  |
 | `sendEmailConfirmation` * | boolean | If set to true, an email confirmation will be sent to the attendee / invitee. |
 
-> Parameters marked with **\*** are required.
+> Fields marked with **\*** are required.
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 

@@ -2,7 +2,9 @@
 outline: deep
 ---
 
-# Find All Webhooks
+# List Webhooks
+
+<ApiEndpoint method="GET" path="/webhooks" />
 
 Retrieve a paginated list of webhooks.
 
@@ -14,25 +16,20 @@ Retrieve a paginated list of webhooks.
 | `page[size]` | `50` | Maximum number of results per page |
 | `page[number]` | `1` | Page number |
 
-> Parameters marked with **\*** are required.
+> Fields marked with **\*** are required.
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
 const webhooks = await confetti.webhooks.findAll({
-  filter: {
-    eventId: 1,
-  },
-  page: {
-    size: 10,
-    number: 1,
-  },
+  filter: { eventId: 1 },
+  page: { size: 10, number: 1 },
 })
 ```
 

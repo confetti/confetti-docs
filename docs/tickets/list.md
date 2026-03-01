@@ -2,7 +2,9 @@
 outline: deep
 ---
 
-# Find All Tickets
+# List Tickets
+
+<ApiEndpoint method="GET" path="/tickets" />
 
 Retrieve a paginated list of tickets.
 
@@ -19,25 +21,20 @@ Retrieve a paginated list of tickets.
 | `page[number]` | `1` | Page number |
 | `include` |  | `addons` |
 
-> Parameters marked with **\*** are required.
+> Fields marked with **\*** are required.
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
 const tickets = await confetti.tickets.findAll({
-  filter: {
-    eventId: 1,
-  },
-  page: {
-    size: 10,
-    number: 1,
-  },
+  filter: { eventId: 1 },
+  page: { size: 10, number: 1 },
 })
 ```
 

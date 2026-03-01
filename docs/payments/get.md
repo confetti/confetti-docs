@@ -2,17 +2,18 @@
 outline: deep
 ---
 
-# Find One Payment
+# Get Payment
+
+<ApiEndpoint method="GET" path="/payments/:id" />
 
 Retrieve a single payment by its ID.
-
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 

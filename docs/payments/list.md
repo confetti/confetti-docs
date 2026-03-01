@@ -2,7 +2,9 @@
 outline: deep
 ---
 
-# Find All Payments
+# List Payments
+
+<ApiEndpoint method="GET" path="/payments" />
 
 Retrieve a paginated list of payments.
 
@@ -15,25 +17,20 @@ Retrieve a paginated list of payments.
 | `page[size]` | `50` | Maximum number of results per page |
 | `page[number]` | `1` | Page number |
 
-> Parameters marked with **\*** are required.
+> Fields marked with **\*** are required.
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
 const payments = await confetti.payments.findAll({
-  filter: {
-    eventId: 1,
-  },
-  page: {
-    size: 10,
-    number: 1,
-  },
+  filter: { eventId: 1 },
+  page: { size: 10, number: 1 },
 })
 ```
 

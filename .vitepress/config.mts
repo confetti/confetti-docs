@@ -29,6 +29,7 @@ export default defineConfig({
 
     nav: [
       { text: 'Docs', link: '/docs/' },
+      { text: 'Changelog', link: '/docs/changelog' },
       {
         text: 'Resources',
         items: [
@@ -102,6 +103,13 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: 'Get Workspace', link: '/docs/workspace/get' },
+          ],
+        },
+        {
+          text: 'More',
+          collapsed: false,
+          items: [
+            { text: 'Changelog', link: '/docs/changelog' },
           ],
         },
       ],

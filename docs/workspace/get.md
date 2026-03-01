@@ -12,6 +12,14 @@ Retrieve a single workspace by its ID.
 
 ::: code-group
 
+```ts [TypeScript]
+import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const workspace = await confetti.workspaces.find(1)
+```
+
 ```js [JavaScript]
 import Confetti from 'confetti'
 

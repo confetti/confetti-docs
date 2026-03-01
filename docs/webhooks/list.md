@@ -22,6 +22,17 @@ Retrieve a paginated list of webhooks.
 
 ::: code-group
 
+```ts [TypeScript]
+import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const webhooks = await confetti.webhooks.findAll({
+  filter: { eventId: 1 },
+  page: { size: 10, number: 1 },
+})
+```
+
 ```js [JavaScript]
 import Confetti from 'confetti'
 

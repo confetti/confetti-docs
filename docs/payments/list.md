@@ -23,6 +23,17 @@ Retrieve a paginated list of payments.
 
 ::: code-group
 
+```ts [TypeScript]
+import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const payments = await confetti.payments.findAll({
+  filter: { eventId: 1 },
+  page: { size: 10, number: 1 },
+})
+```
+
 ```js [JavaScript]
 import Confetti from 'confetti'
 

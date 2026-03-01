@@ -10,6 +10,9 @@ const raw = require('confetti')
 const confetti: ConfettiPackage = raw['module.exports'] ?? raw
 const DOCS_DIR = join(ROOT, 'docs')
 
+const CHANGELOG_URL =
+  'https://raw.githubusercontent.com/confetti/confetti-node/master/CHANGELOG.md'
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
@@ -90,7 +93,7 @@ function mdTable(headers: string[], rows: string[][]): string {
 }
 
 // ---------------------------------------------------------------------------
-// Example values (shared across JS and cURL output)
+// Example values (shared across TS, JS and cURL output)
 // ---------------------------------------------------------------------------
 
 const KNOWN_EXAMPLES: Record<string, { js: string; raw: unknown }> = {
@@ -198,6 +201,14 @@ function generateListPage(key: string, model: Model): string {
     curlQuery = `?filter[${filterKey}]=${val.raw}`
   }
 
+  const sdkBody = `import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const ${key}s = await confetti.${model.endpoint}.findAll({${jsFilterArg}
+  page: { size: 10, number: 1 },
+})`
+
   return `---
 outline: deep
 ---
@@ -218,14 +229,12 @@ ${mdTable(['Parameter', 'Default', 'Values / Description'], rows)}
 
 ::: code-group
 
+\`\`\`ts [TypeScript]
+${sdkBody}
+\`\`\`
+
 \`\`\`js [JavaScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const ${key}s = await confetti.${model.endpoint}.findAll({${jsFilterArg}
-  page: { size: 10, number: 1 },
-})
+${sdkBody}
 \`\`\`
 
 \`\`\`sh [cURL]
@@ -261,6 +270,12 @@ function generateGetPage(key: string, model: Model): string {
     ? `## Parameters\n\n${mdTable(['Parameter', 'Default', 'Values / Description'], rows)}\n\n`
     : ''
 
+  const sdkBody = `import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const ${key} = await confetti.${model.endpoint}.find(${sampleId})`
+
   return `---
 outline: deep
 ---
@@ -275,12 +290,12 @@ ${paramSection}## Request
 
 ::: code-group
 
+\`\`\`ts [TypeScript]
+${sdkBody}
+\`\`\`
+
 \`\`\`js [JavaScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const ${key} = await confetti.${model.endpoint}.find(${sampleId})
+${sdkBody}
 \`\`\`
 
 \`\`\`sh [cURL]
@@ -329,6 +344,14 @@ function generateCreatePage(key: string, model: Model): string {
 
   const curlBody = json({ data: { type: key, attributes: curlAttrs } })
 
+  const sdkBody = `import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const ${key} = await confetti.${model.endpoint}.create({
+${jsFields}
+})`
+
   return `---
 outline: deep
 ---
@@ -349,14 +372,12 @@ ${mdTable(['Attribute', 'Type', 'Description'], rows)}
 
 ::: code-group
 
+\`\`\`ts [TypeScript]
+${sdkBody}
+\`\`\`
+
 \`\`\`js [JavaScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const ${key} = await confetti.${model.endpoint}.create({
-${jsFields}
-})
+${sdkBody}
 \`\`\`
 
 \`\`\`sh [cURL]
@@ -368,6 +389,38 @@ curl -X POST "https://api.confetti.events/${model.endpoint}" \\
 
 :::
 `
+}
+
+// ---------------------------------------------------------------------------
+// Changelog
+// ---------------------------------------------------------------------------
+
+async function generateChangelog(): Promise<void> {
+  let md: string
+  try {
+    const res = await fetch(CHANGELOG_URL)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    md = await res.text()
+  } catch (err) {
+    console.warn(`⚠ Could not fetch changelog: ${err}`)
+    return
+  }
+
+  const normalized = md.replace(/^# /gm, '## ')
+
+  const page = `---
+outline: deep
+---
+
+# Changelog
+
+Release history for the [Confetti Node.js SDK](https://github.com/confetti/confetti-node).
+
+${normalized}
+`
+
+  writeFileSync(join(DOCS_DIR, 'changelog.md'), page)
+  console.log('Generated changelog from GitHub')
 }
 
 // ---------------------------------------------------------------------------
@@ -399,5 +452,7 @@ for (const { key, ops } of resources) {
     writeFileSync(join(dir, `${op}.md`), generators[op](key, model))
   }
 }
+
+await generateChangelog()
 
 console.log('Generated API documentation in docs/')

@@ -24,6 +24,17 @@ Retrieve a paginated list of events.
 
 ::: code-group
 
+```ts [TypeScript]
+import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const events = await confetti.events.findAll({
+  filter: { signupType: 'rsvp' },
+  page: { size: 10, number: 1 },
+})
+```
+
 ```js [JavaScript]
 import Confetti from 'confetti'
 

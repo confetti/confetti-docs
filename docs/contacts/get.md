@@ -12,6 +12,14 @@ Retrieve a single contact by its ID.
 
 ::: code-group
 
+```ts [TypeScript]
+import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const contact = await confetti.contacts.find(588032)
+```
+
 ```js [JavaScript]
 import Confetti from 'confetti'
 

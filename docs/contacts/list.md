@@ -21,6 +21,16 @@ Retrieve a paginated list of contacts.
 
 ::: code-group
 
+```ts [TypeScript]
+import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const contacts = await confetti.contacts.findAll({
+  page: { size: 10, number: 1 },
+})
+```
+
 ```js [JavaScript]
 import Confetti from 'confetti'
 

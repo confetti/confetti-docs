@@ -18,6 +18,14 @@ Retrieve a single ticket by its ID.
 
 ::: code-group
 
+```ts [TypeScript]
+import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const ticket = await confetti.tickets.find(3344691)
+```
+
 ```js [JavaScript]
 import Confetti from 'confetti'
 

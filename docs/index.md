@@ -8,8 +8,8 @@ The Confetti API lets you integrate with [Confetti](https://confetti.events) —
 
 Use the API to build custom integrations, automate workflows, or sync event data with external systems.
 
-::: tip Node.js SDK
-The fastest way to get started is with the [official Node.js SDK](https://github.com/confetti/confetti-node). It handles authentication, pagination, and response formatting out of the box.
+::: tip Node.js SDK with TypeScript support
+The fastest way to get started is with the [official Node.js SDK](https://github.com/confetti/confetti-node). It ships with built-in TypeScript declarations — you get full autocompletion and type safety out of the box, with zero extra configuration.
 :::
 
 ## Base URL
@@ -25,6 +25,12 @@ https://api.confetti.events
 Authenticate by passing your API key in the `Authorization` header. Generate a key from **Workspace → Settings → API & Webhooks** in the Confetti dashboard.
 
 ::: code-group
+
+```ts [TypeScript]
+import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+```
 
 ```js [JavaScript]
 import Confetti from 'confetti'

@@ -18,6 +18,14 @@ Retrieve a single event by its ID.
 
 ::: code-group
 
+```ts [TypeScript]
+import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const event = await confetti.events.find(16500)
+```
+
 ```js [JavaScript]
 import Confetti from 'confetti'
 

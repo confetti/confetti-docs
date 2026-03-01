@@ -12,6 +12,14 @@ Retrieve a single payment by its ID.
 
 ::: code-group
 
+```ts [TypeScript]
+import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const payment = await confetti.payments.find(288298)
+```
+
 ```js [JavaScript]
 import Confetti from 'confetti'
 

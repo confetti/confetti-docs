@@ -10,17 +10,17 @@ Create a new ticket.
 
 ## Attributes
 
-| Attribute | Type | Description |
-| --- | --- | --- |
-| `eventId` * | number |  |
-| `ticketBatchId` | number | Required for ticket events |
-| `firstName` | string |  |
-| `lastName` | string |  |
-| `email` * | string |  |
-| `status` * | string | `attending`, `invited` |
-| `phone` | string | Mobile phone number with country code. Example: +46701234567 |
-| `company` | string |  |
-| `comment` | string |  |
+| Attribute                 | Type    | Description                                                                   |
+| ------------------------- | ------- | ----------------------------------------------------------------------------- |
+| `eventId` *               | number  |                                                                               |
+| `ticketBatchId`           | number  | Required for ticket events                                                    |
+| `firstName`               | string  |                                                                               |
+| `lastName`                | string  |                                                                               |
+| `email` *                 | string  |                                                                               |
+| `status` *                | string  | `attending`, `invited`                                                        |
+| `phone`                   | string  | Mobile phone number with country code. Example: +46701234567                  |
+| `company`                 | string  |                                                                               |
+| `comment`                 | string  |                                                                               |
 | `sendEmailConfirmation` * | boolean | If set to true, an email confirmation will be sent to the attendee / invitee. |
 
 > Fields marked with **\*** are required.

@@ -2,6 +2,7 @@ import { createRequire } from 'node:module'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { markdownTable } from 'markdown-table'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -71,6 +72,72 @@ interface ResourceConfig {
   ops: Array<'list' | 'get' | 'create'>
 }
 
+interface CodeTab {
+  label: string
+  lang: string
+  code: string
+}
+
+// ---------------------------------------------------------------------------
+// Markdown builder
+// ---------------------------------------------------------------------------
+
+class MdBuilder {
+  private parts: string[] = []
+
+  frontmatter(data: Record<string, unknown>): this {
+    const lines = Object.entries(data).map(([k, v]) => `${k}: ${v}`)
+    this.parts.push(['---', ...lines, '---'].join('\n'))
+    return this
+  }
+
+  heading(level: number, text: string): this {
+    this.parts.push('#'.repeat(level) + ' ' + text)
+    return this
+  }
+
+  paragraph(text: string): this {
+    this.parts.push(text)
+    return this
+  }
+
+  component(tag: string, attrs: Record<string, string>): this {
+    const pairs = Object.entries(attrs).map(([k, v]) => `${k}="${v}"`)
+    this.parts.push(`<${tag} ${pairs.join(' ')} />`)
+    return this
+  }
+
+  table(headers: string[], rows: string[][]): this {
+    if (rows.length > 0) {
+      this.parts.push(markdownTable([headers, ...rows]))
+    }
+    return this
+  }
+
+  blockquote(text: string): this {
+    this.parts.push(text.split('\n').map((l) => `> ${l}`).join('\n'))
+    return this
+  }
+
+  codeGroup(tabs: CodeTab[]): this {
+    const fence = '```'
+    const blocks = tabs
+      .map((t) => `${fence}${t.lang} [${t.label}]\n${t.code}\n${fence}`)
+      .join('\n\n')
+    this.parts.push(`::: code-group\n\n${blocks}\n\n:::`)
+    return this
+  }
+
+  codeBlock(lang: string, code: string): this {
+    this.parts.push('```' + lang + '\n' + code + '\n```')
+    return this
+  }
+
+  build(): string {
+    return this.parts.join('\n\n') + '\n'
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -82,15 +149,6 @@ const humanize = (key: string): string =>
 
 const escapeCell = (s: unknown): string =>
   String(s ?? '').replace(/\|/g, '\\|')
-
-function mdTable(headers: string[], rows: string[][]): string {
-  if (rows.length === 0) return ''
-  return [
-    `| ${headers.join(' | ')} |`,
-    `| ${headers.map(() => '---').join(' | ')} |`,
-    ...rows.map((r) => `| ${r.join(' | ')} |`),
-  ].join('\n')
-}
 
 // ---------------------------------------------------------------------------
 // Example values (shared across TS, JS and cURL output)
@@ -180,151 +238,130 @@ function buildCreateRows(attributes: CreateAttribute[]): string[][] {
 }
 
 // ---------------------------------------------------------------------------
+// SDK code snippet builder
+// ---------------------------------------------------------------------------
+
+function sdkSnippet(parts: {
+  endpoint: string
+  varName: string
+  method: string
+  args: string
+}): string {
+  return [
+    "import Confetti from 'confetti'",
+    '',
+    "const confetti = new Confetti({ apiKey: 'your-key' })",
+    '',
+    `const ${parts.varName} = await confetti.${parts.endpoint}.${parts.method}(${parts.args})`,
+  ].join('\n')
+}
+
+// ---------------------------------------------------------------------------
 // Page generators
 // ---------------------------------------------------------------------------
 
 function generateListPage(key: string, model: Model): string {
   const name = humanize(key)
-  const rows = [
+  const paramRows = [
     ...buildFilterRows(model.filters),
     ...buildPaginationRows(),
     ...buildIncludeRows(model.includes),
   ]
 
   const filters = model.filters ? Object.entries(model.filters) : []
-  let jsFilterArg = ''
+  let filterArg = ''
   let curlQuery = ''
   if (filters.length > 0) {
     const [filterKey, filter] = filters[0]
     const val = exampleFilterValue(filter)
-    jsFilterArg = `\n  filter: { ${filterKey}: ${val.js} },`
+    filterArg = `{\n  filter: { ${filterKey}: ${val.js} },\n  page: { size: 10, number: 1 },\n}`
     curlQuery = `?filter[${filterKey}]=${val.raw}`
+  } else {
+    filterArg = '{\n  page: { size: 10, number: 1 },\n}'
   }
 
-  const sdkBody = `import Confetti from 'confetti'
+  const sdk = sdkSnippet({
+    endpoint: model.endpoint,
+    varName: `${key}s`,
+    method: 'findAll',
+    args: filterArg,
+  })
 
-const confetti = new Confetti({ apiKey: 'your-key' })
+  const curl = [
+    `curl "https://api.confetti.events/${model.endpoint}${curlQuery}" \\`,
+    '  -H "Authorization: apikey your-key"',
+  ].join('\n')
 
-const ${key}s = await confetti.${model.endpoint}.findAll({${jsFilterArg}
-  page: { size: 10, number: 1 },
-})`
-
-  return `---
-outline: deep
----
-
-# List ${name}s
-
-<ApiEndpoint method="GET" path="/${model.endpoint}" />
-
-Retrieve a paginated list of ${name.toLowerCase()}s.
-
-## Parameters
-
-${mdTable(['Parameter', 'Default', 'Values / Description'], rows)}
-
-> Fields marked with **\\*** are required.
-
-## Request
-
-::: code-group
-
-\`\`\`ts [TypeScript]
-${sdkBody}
-\`\`\`
-
-\`\`\`js [JavaScript]
-${sdkBody}
-\`\`\`
-
-\`\`\`sh [cURL]
-curl "https://api.confetti.events/${model.endpoint}${curlQuery}" \\
-  -H "Authorization: apikey your-key"
-\`\`\`
-
-:::
-
-## Response
-
-::: code-group
-
-\`\`\`json [Formatted (SDK)]
-${json(model.sample.multiple.formatted)}
-\`\`\`
-
-\`\`\`json [Raw (JSON:API)]
-${json(model.sample.multiple.raw)}
-\`\`\`
-
-:::
-`
+  return new MdBuilder()
+    .frontmatter({ outline: 'deep' })
+    .heading(1, `List ${name}s`)
+    .component('ApiEndpoint', { method: 'GET', path: `/${model.endpoint}` })
+    .paragraph(`Retrieve a paginated list of ${name.toLowerCase()}s.`)
+    .heading(2, 'Parameters')
+    .table(['Parameter', 'Default', 'Values / Description'], paramRows)
+    .blockquote('Fields marked with **\\*** are required.')
+    .heading(2, 'Request')
+    .codeGroup([
+      { label: 'TypeScript', lang: 'ts', code: sdk },
+      { label: 'JavaScript', lang: 'js', code: sdk },
+      { label: 'cURL', lang: 'sh', code: curl },
+    ])
+    .heading(2, 'Response')
+    .codeGroup([
+      { label: 'Formatted (SDK)', lang: 'json', code: json(model.sample.multiple.formatted) },
+      { label: 'Raw (JSON:API)', lang: 'json', code: json(model.sample.multiple.raw) },
+    ])
+    .build()
 }
 
 function generateGetPage(key: string, model: Model): string {
   const name = humanize(key)
-  const rows = buildIncludeRows(model.includes)
+  const includeRows = buildIncludeRows(model.includes)
   const sampleId =
     (model.sample.single.formatted as Record<string, unknown>).id ?? '2'
 
-  const paramSection = rows.length
-    ? `## Parameters\n\n${mdTable(['Parameter', 'Default', 'Values / Description'], rows)}\n\n`
-    : ''
+  const sdk = sdkSnippet({
+    endpoint: model.endpoint,
+    varName: key,
+    method: 'find',
+    args: String(sampleId),
+  })
 
-  const sdkBody = `import Confetti from 'confetti'
+  const curl = [
+    `curl "https://api.confetti.events/${model.endpoint}/${sampleId}" \\`,
+    '  -H "Authorization: apikey your-key"',
+  ].join('\n')
 
-const confetti = new Confetti({ apiKey: 'your-key' })
+  const md = new MdBuilder()
+    .frontmatter({ outline: 'deep' })
+    .heading(1, `Get ${name}`)
+    .component('ApiEndpoint', { method: 'GET', path: `/${model.endpoint}/:id` })
+    .paragraph(`Retrieve a single ${name.toLowerCase()} by its ID.`)
 
-const ${key} = await confetti.${model.endpoint}.find(${sampleId})`
+  if (includeRows.length > 0) {
+    md.heading(2, 'Parameters')
+      .table(['Parameter', 'Default', 'Values / Description'], includeRows)
+  }
 
-  return `---
-outline: deep
----
-
-# Get ${name}
-
-<ApiEndpoint method="GET" path="/${model.endpoint}/:id" />
-
-Retrieve a single ${name.toLowerCase()} by its ID.
-
-${paramSection}## Request
-
-::: code-group
-
-\`\`\`ts [TypeScript]
-${sdkBody}
-\`\`\`
-
-\`\`\`js [JavaScript]
-${sdkBody}
-\`\`\`
-
-\`\`\`sh [cURL]
-curl "https://api.confetti.events/${model.endpoint}/${sampleId}" \\
-  -H "Authorization: apikey your-key"
-\`\`\`
-
-:::
-
-## Response
-
-::: code-group
-
-\`\`\`json [Formatted (SDK)]
-${json(model.sample.single.formatted)}
-\`\`\`
-
-\`\`\`json [Raw (JSON:API)]
-${json(model.sample.single.raw)}
-\`\`\`
-
-:::
-`
+  return md
+    .heading(2, 'Request')
+    .codeGroup([
+      { label: 'TypeScript', lang: 'ts', code: sdk },
+      { label: 'JavaScript', lang: 'js', code: sdk },
+      { label: 'cURL', lang: 'sh', code: curl },
+    ])
+    .heading(2, 'Response')
+    .codeGroup([
+      { label: 'Formatted (SDK)', lang: 'json', code: json(model.sample.single.formatted) },
+      { label: 'Raw (JSON:API)', lang: 'json', code: json(model.sample.single.raw) },
+    ])
+    .build()
 }
 
 function generateCreatePage(key: string, model: Model): string {
   const name = humanize(key)
   const attrs = model.operations?.create?.attributes ?? []
-  const rows = buildCreateRows(attrs)
+  const attrRows = buildCreateRows(attrs)
 
   const displayAttrs = attrs.filter(
     (a) =>
@@ -336,6 +373,13 @@ function generateCreatePage(key: string, model: Model): string {
     .map((a) => `  ${a.key}: ${exampleAttrValue(a).js},`)
     .join('\n')
 
+  const sdk = sdkSnippet({
+    endpoint: model.endpoint,
+    varName: key,
+    method: 'create',
+    args: `{\n${jsFields}\n}`,
+  })
+
   const curlAttrs = Object.fromEntries(
     displayAttrs
       .filter((a) => !a.key.toLowerCase().includes('id') || a.key === 'eventId')
@@ -344,51 +388,28 @@ function generateCreatePage(key: string, model: Model): string {
 
   const curlBody = json({ data: { type: key, attributes: curlAttrs } })
 
-  const sdkBody = `import Confetti from 'confetti'
+  const curl = [
+    `curl -X POST "https://api.confetti.events/${model.endpoint}" \\`,
+    '  -H "Content-Type: application/json" \\',
+    '  -H "Authorization: apikey your-key" \\',
+    `  -d '${curlBody}'`,
+  ].join('\n')
 
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const ${key} = await confetti.${model.endpoint}.create({
-${jsFields}
-})`
-
-  return `---
-outline: deep
----
-
-# Create ${name}
-
-<ApiEndpoint method="POST" path="/${model.endpoint}" />
-
-Create a new ${name.toLowerCase()}.
-
-## Attributes
-
-${mdTable(['Attribute', 'Type', 'Description'], rows)}
-
-> Fields marked with **\\*** are required.
-
-## Request
-
-::: code-group
-
-\`\`\`ts [TypeScript]
-${sdkBody}
-\`\`\`
-
-\`\`\`js [JavaScript]
-${sdkBody}
-\`\`\`
-
-\`\`\`sh [cURL]
-curl -X POST "https://api.confetti.events/${model.endpoint}" \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: apikey your-key" \\
-  -d '${curlBody}'
-\`\`\`
-
-:::
-`
+  return new MdBuilder()
+    .frontmatter({ outline: 'deep' })
+    .heading(1, `Create ${name}`)
+    .component('ApiEndpoint', { method: 'POST', path: `/${model.endpoint}` })
+    .paragraph(`Create a new ${name.toLowerCase()}.`)
+    .heading(2, 'Attributes')
+    .table(['Attribute', 'Type', 'Description'], attrRows)
+    .blockquote('Fields marked with **\\*** are required.')
+    .heading(2, 'Request')
+    .codeGroup([
+      { label: 'TypeScript', lang: 'ts', code: sdk },
+      { label: 'JavaScript', lang: 'js', code: sdk },
+      { label: 'cURL', lang: 'sh', code: curl },
+    ])
+    .build()
 }
 
 // ---------------------------------------------------------------------------
@@ -402,22 +423,20 @@ async function generateChangelog(): Promise<void> {
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     md = await res.text()
   } catch (err) {
-    console.warn(`⚠ Could not fetch changelog: ${err}`)
+    console.warn(`Could not fetch changelog: ${err}`)
     return
   }
 
   const normalized = md.replace(/^# /gm, '## ')
 
-  const page = `---
-outline: deep
----
-
-# Changelog
-
-Release history for the [Confetti Node.js SDK](https://github.com/confetti/confetti-node).
-
-${normalized}
-`
+  const page = new MdBuilder()
+    .frontmatter({ outline: 'deep' })
+    .heading(1, 'Changelog')
+    .paragraph(
+      'Release history for the [Confetti Node.js SDK](https://github.com/confetti/confetti-node).',
+    )
+    .paragraph(normalized)
+    .build()
 
   writeFileSync(join(DOCS_DIR, 'changelog.md'), page)
   console.log('Generated changelog from GitHub')

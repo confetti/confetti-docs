@@ -11,8 +11,8 @@ Retrieve a single ticket by its ID.
 ## Parameters
 
 | Parameter | Default | Values / Description |
-| --- | --- | --- |
-| `include` |  | `addons` |
+| --------- | ------- | -------------------- |
+| `include` |         | `addons`             |
 
 ## Request
 

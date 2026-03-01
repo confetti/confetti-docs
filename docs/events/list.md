@@ -10,13 +10,13 @@ Retrieve a paginated list of events.
 
 ## Parameters
 
-| Parameter | Default | Values / Description |
-| --- | --- | --- |
-| `filter[signupType]` |  | `rsvp`, `tickets` |
-| `filter[type]` |  | `future`, `past` |
-| `page[size]` | `50` | Maximum number of results per page |
-| `page[number]` | `1` | Page number |
-| `include` |  | `categories`, `pages`, `pages.blocks`, `pages.blocks.images`, `schedule-items`, `speakers`, `speakers.image`, `organisers`, `organisers.image` |
+| Parameter            | Default | Values / Description                                                                                                                           |
+| -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `filter[signupType]` |         | `rsvp`, `tickets`                                                                                                                              |
+| `filter[type]`       |         | `future`, `past`                                                                                                                               |
+| `page[size]`         | `50`    | Maximum number of results per page                                                                                                             |
+| `page[number]`       | `1`     | Page number                                                                                                                                    |
+| `include`            |         | `categories`, `pages`, `pages.blocks`, `pages.blocks.images`, `schedule-items`, `speakers`, `speakers.image`, `organisers`, `organisers.image` |
 
 > Fields marked with **\*** are required.
 

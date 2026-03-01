@@ -10,10 +10,10 @@ Retrieve a paginated list of contacts.
 
 ## Parameters
 
-| Parameter | Default | Values / Description |
-| --- | --- | --- |
-| `page[size]` | `50` | Maximum number of results per page |
-| `page[number]` | `1` | Page number |
+| Parameter      | Default | Values / Description               |
+| -------------- | ------- | ---------------------------------- |
+| `page[size]`   | `50`    | Maximum number of results per page |
+| `page[number]` | `1`     | Page number                        |
 
 > Fields marked with **\*** are required.
 

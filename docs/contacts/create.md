@@ -10,16 +10,16 @@ Create a new contact.
 
 ## Attributes
 
-| Attribute | Type | Description |
-| --- | --- | --- |
-| `firstName` | string |  |
-| `lastName` | string |  |
-| `email` * | string |  |
-| `phone` | string | Mobile phone number with country code. Example: +46701234567 |
-| `comment` | string |  |
-| `company` | string |  |
-| `categoryIds` | array | Attach categories to your contact. |
-| `workspaceId` * | number |  |
+| Attribute       | Type   | Description                                                  |
+| --------------- | ------ | ------------------------------------------------------------ |
+| `firstName`     | string |                                                              |
+| `lastName`      | string |                                                              |
+| `email` *       | string |                                                              |
+| `phone`         | string | Mobile phone number with country code. Example: +46701234567 |
+| `comment`       | string |                                                              |
+| `company`       | string |                                                              |
+| `categoryIds`   | array  | Attach categories to your contact.                           |
+| `workspaceId` * | number |                                                              |
 
 > Fields marked with **\*** are required.
 

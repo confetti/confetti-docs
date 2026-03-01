@@ -10,16 +10,16 @@ Retrieve a paginated list of tickets.
 
 ## Parameters
 
-| Parameter | Default | Values / Description |
-| --- | --- | --- |
-| `filter[eventId]` * |  | number |
-| `filter[search]` |  | string |
-| `filter[description]` |  | string |
-| `filter[checkedIn]` |  | boolean |
-| `filter[status]` |  | `attending`, `waitlist`, `declined`, `invited`, `consumed`, `deletion-requested` |
-| `page[size]` | `50` | Maximum number of results per page |
-| `page[number]` | `1` | Page number |
-| `include` |  | `addons` |
+| Parameter             | Default | Values / Description                                                             |
+| --------------------- | ------- | -------------------------------------------------------------------------------- |
+| `filter[eventId]` *   |         | number                                                                           |
+| `filter[search]`      |         | string                                                                           |
+| `filter[description]` |         | string                                                                           |
+| `filter[checkedIn]`   |         | boolean                                                                          |
+| `filter[status]`      |         | `attending`, `waitlist`, `declined`, `invited`, `consumed`, `deletion-requested` |
+| `page[size]`          | `50`    | Maximum number of results per page                                               |
+| `page[number]`        | `1`     | Page number                                                                      |
+| `include`             |         | `addons`                                                                         |
 
 > Fields marked with **\*** are required.
 

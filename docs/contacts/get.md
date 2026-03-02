@@ -2,17 +2,18 @@
 outline: deep
 ---
 
-# Find One Contact
+# Get Contact
+
+<ApiEndpoint method="GET" path="/contacts/:id" />
 
 Retrieve a single contact by its ID.
-
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
@@ -29,6 +30,25 @@ curl "https://api.confetti.events/contacts/588032" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Contact {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  token: string
+  status: string
+  comment: string
+  lastSeen: Date
+  deletionRequestedAt: Date
+  createdAt: Date
+  updatedAt: Date
+  organisationId: number
+  company: string
+}
+```
 
 ```json [Formatted (SDK)]
 {

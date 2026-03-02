@@ -2,17 +2,18 @@
 outline: deep
 ---
 
-# Find One Payment
+# Get Payment
+
+<ApiEndpoint method="GET" path="/payments/:id" />
 
 Retrieve a single payment by its ID.
-
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
@@ -29,6 +30,25 @@ curl "https://api.confetti.events/payments/288298" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Payment {
+  id: number
+  name: string
+  email: string
+  company: string
+  amount: number
+  vat: number
+  vatPercentage: number
+  commission: string
+  commissionVat: string
+  customer: string
+  token: string
+  currency: string
+  status: string
+  paidAt: Date
+}
+```
 
 ```json [Formatted (SDK)]
 {

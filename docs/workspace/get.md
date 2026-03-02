@@ -2,17 +2,18 @@
 outline: deep
 ---
 
-# Find One Workspace
+# Get Workspace
+
+<ApiEndpoint method="GET" path="/workspaces/:id" />
 
 Retrieve a single workspace by its ID.
-
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
@@ -29,6 +30,24 @@ curl "https://api.confetti.events/workspaces/1" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Workspace {
+  id: number
+  name: string
+  timeZone: string
+  slug: string
+  featureLevel: string
+  website: string
+  email: string
+  createdAt: Date
+  updatedAt: Date
+  shareTitle: string
+  shareDescription: string
+  summary: string
+  primaryColor: string
+}
+```
 
 ```json [Formatted (SDK)]
 {

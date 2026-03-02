@@ -2,33 +2,32 @@
 outline: deep
 ---
 
-# Find All Contacts
+# List Contacts
+
+<ApiEndpoint method="GET" path="/contacts" />
 
 Retrieve a paginated list of contacts.
 
 ## Parameters
 
-| Parameter | Default | Values / Description |
-| --- | --- | --- |
-| `page[size]` | `50` | Maximum number of results per page |
-| `page[number]` | `1` | Page number |
+| Parameter      | Default | Values / Description               |
+| -------------- | ------- | ---------------------------------- |
+| `page[size]`   | `50`    | Maximum number of results per page |
+| `page[number]` | `1`     | Page number                        |
 
-> Parameters marked with **\*** are required.
+> Fields marked with **\*** are required.
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
 const contacts = await confetti.contacts.findAll({
-  page: {
-    size: 10,
-    number: 1,
-  },
+  page: { size: 10, number: 1 },
 })
 ```
 
@@ -42,6 +41,25 @@ curl "https://api.confetti.events/contacts" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Contact {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  token: string
+  status: string
+  comment: string
+  lastSeen: Date
+  deletionRequestedAt: Date
+  createdAt: Date
+  updatedAt: Date
+  organisationId: number
+  company: string
+}
+```
 
 ```json [Formatted (SDK)]
 [

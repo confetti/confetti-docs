@@ -2,39 +2,36 @@
 outline: deep
 ---
 
-# Find All Events
+# List Events
+
+<ApiEndpoint method="GET" path="/events" />
 
 Retrieve a paginated list of events.
 
 ## Parameters
 
-| Parameter | Default | Values / Description |
-| --- | --- | --- |
-| `filter[signupType]` |  | `rsvp`, `tickets` |
-| `filter[type]` |  | `future`, `past` |
-| `page[size]` | `50` | Maximum number of results per page |
-| `page[number]` | `1` | Page number |
-| `include` |  | `categories`, `pages`, `pages.blocks`, `pages.blocks.images`, `schedule-items`, `speakers`, `speakers.image`, `organisers`, `organisers.image` |
+| Parameter            | Default | Values / Description                                                                                                                           |
+| -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `filter[signupType]` |         | `rsvp`, `tickets`                                                                                                                              |
+| `filter[type]`       |         | `future`, `past`                                                                                                                               |
+| `page[size]`         | `50`    | Maximum number of results per page                                                                                                             |
+| `page[number]`       | `1`     | Page number                                                                                                                                    |
+| `include`            |         | `categories`, `pages`, `pages.blocks`, `pages.blocks.images`, `schedule-items`, `speakers`, `speakers.image`, `organisers`, `organisers.image` |
 
-> Parameters marked with **\*** are required.
+> Fields marked with **\*** are required.
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
 const events = await confetti.events.findAll({
-  filter: {
-    signupType: 'rsvp',
-  },
-  page: {
-    size: 10,
-    number: 1,
-  },
+  filter: { signupType: 'rsvp' },
+  page: { size: 10, number: 1 },
 })
 ```
 
@@ -48,6 +45,42 @@ curl "https://api.confetti.events/events?filter[signupType]=rsvp" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Event {
+  id: number
+  name: string
+  startDate: Date
+  endDate: Date
+  timeZone: string
+  slug: string
+  status: string
+  featureLevel: string
+  signupType: string
+  signupStartAt: Date
+  signupEndAt: Date
+  website: string
+  email: string
+  rsvpLimit: number
+  rsvpLeft: number
+  waitlisted: number
+  hasPassed: boolean
+  createdAt: Date
+  updatedAt: Date
+  workspaceId: number
+  shareTitle: string
+  shareDescription: string
+  summary: string
+  timeFormat: string
+  locale: string
+  primaryColor: string
+  contrastColor: string
+  waitlist: string
+  enableExtraGuests: boolean
+  maxExtraGuests: number
+  location: string
+}
+```
 
 ```json [Formatted (SDK)]
 [

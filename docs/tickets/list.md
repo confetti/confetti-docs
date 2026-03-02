@@ -2,42 +2,39 @@
 outline: deep
 ---
 
-# Find All Tickets
+# List Tickets
+
+<ApiEndpoint method="GET" path="/tickets" />
 
 Retrieve a paginated list of tickets.
 
 ## Parameters
 
-| Parameter | Default | Values / Description |
-| --- | --- | --- |
-| `filter[eventId]` * |  | number |
-| `filter[search]` |  | string |
-| `filter[description]` |  | string |
-| `filter[checkedIn]` |  | boolean |
-| `filter[status]` |  | `attending`, `waitlist`, `declined`, `invited`, `consumed`, `deletion-requested` |
-| `page[size]` | `50` | Maximum number of results per page |
-| `page[number]` | `1` | Page number |
-| `include` |  | `addons` |
+| Parameter             | Default | Values / Description                                                             |
+| --------------------- | ------- | -------------------------------------------------------------------------------- |
+| `filter[eventId]` *   |         | number                                                                           |
+| `filter[search]`      |         | string                                                                           |
+| `filter[description]` |         | string                                                                           |
+| `filter[checkedIn]`   |         | boolean                                                                          |
+| `filter[status]`      |         | `attending`, `waitlist`, `declined`, `invited`, `consumed`, `deletion-requested` |
+| `page[size]`          | `50`    | Maximum number of results per page                                               |
+| `page[number]`        | `1`     | Page number                                                                      |
+| `include`             |         | `addons`                                                                         |
 
-> Parameters marked with **\*** are required.
+> Fields marked with **\*** are required.
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
 const tickets = await confetti.tickets.findAll({
-  filter: {
-    eventId: 1,
-  },
-  page: {
-    size: 10,
-    number: 1,
-  },
+  filter: { eventId: 1 },
+  page: { size: 10, number: 1 },
 })
 ```
 
@@ -51,6 +48,41 @@ curl "https://api.confetti.events/tickets?filter[eventId]=1" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Ticket {
+  id: number
+  persons: number
+  hashid: string
+  description: string
+  price: number
+  currency: string
+  firstName: string
+  lastName: string
+  name: string
+  email: string
+  phone: string
+  company: string
+  token: string
+  status: string
+  emailStatus: string
+  checkinAt: Date
+  waitlistAt: Date
+  startDate: Date
+  endDate: Date
+  values: string
+  comment: string
+  guests: number
+  termsAcceptedAt: Date
+  deletionRequestedAt: Date
+  createdAt: Date
+  updatedAt: Date
+  ticketBatchId: number
+  paymentId: number
+  eventId: number
+  contactId: number
+}
+```
 
 ```json [Formatted (SDK)]
 [

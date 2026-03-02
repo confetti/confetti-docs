@@ -2,37 +2,34 @@
 outline: deep
 ---
 
-# Find All Webhooks
+# List Webhooks
+
+<ApiEndpoint method="GET" path="/webhooks" />
 
 Retrieve a paginated list of webhooks.
 
 ## Parameters
 
-| Parameter | Default | Values / Description |
-| --- | --- | --- |
-| `filter[eventId]` |  | number |
-| `page[size]` | `50` | Maximum number of results per page |
-| `page[number]` | `1` | Page number |
+| Parameter         | Default | Values / Description               |
+| ----------------- | ------- | ---------------------------------- |
+| `filter[eventId]` |         | number                             |
+| `page[size]`      | `50`    | Maximum number of results per page |
+| `page[number]`    | `1`     | Page number                        |
 
-> Parameters marked with **\*** are required.
+> Fields marked with **\*** are required.
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
 const webhooks = await confetti.webhooks.findAll({
-  filter: {
-    eventId: 1,
-  },
-  page: {
-    size: 10,
-    number: 1,
-  },
+  filter: { eventId: 1 },
+  page: { size: 10, number: 1 },
 })
 ```
 
@@ -46,6 +43,18 @@ curl "https://api.confetti.events/webhooks?filter[eventId]=1" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Webhook {
+  id: number
+  type: string
+  url: string
+  provider: string
+  status: string
+  createdAt: Date
+  updatedAt: Date
+}
+```
 
 ```json [Formatted (SDK)]
 [

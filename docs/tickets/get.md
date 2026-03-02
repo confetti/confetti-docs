@@ -2,22 +2,24 @@
 outline: deep
 ---
 
-# Find One Ticket
+# Get Ticket
+
+<ApiEndpoint method="GET" path="/tickets/:id" />
 
 Retrieve a single ticket by its ID.
 
 ## Parameters
 
 | Parameter | Default | Values / Description |
-| --- | --- | --- |
-| `include` |  | `addons` |
+| --------- | ------- | -------------------- |
+| `include` |         | `addons`             |
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
@@ -34,6 +36,41 @@ curl "https://api.confetti.events/tickets/3344691" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Ticket {
+  id: number
+  persons: number
+  hashid: string
+  description: string
+  price: number
+  currency: string
+  firstName: string
+  lastName: string
+  name: string
+  email: string
+  phone: string
+  company: string
+  token: string
+  status: string
+  emailStatus: string
+  checkinAt: Date
+  waitlistAt: Date
+  startDate: Date
+  endDate: Date
+  values: string
+  comment: string
+  guests: number
+  termsAcceptedAt: Date
+  deletionRequestedAt: Date
+  createdAt: Date
+  updatedAt: Date
+  ticketBatchId: number
+  paymentId: number
+  eventId: number
+  contactId: number
+}
+```
 
 ```json [Formatted (SDK)]
 {

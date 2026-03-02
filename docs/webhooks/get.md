@@ -2,17 +2,18 @@
 outline: deep
 ---
 
-# Find One Webhook
+# Get Webhook
+
+<ApiEndpoint method="GET" path="/webhooks/:id" />
 
 Retrieve a single webhook by its ID.
-
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
@@ -29,6 +30,18 @@ curl "https://api.confetti.events/webhooks/1" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Webhook {
+  id: number
+  type: string
+  url: string
+  provider: string
+  status: string
+  createdAt: Date
+  updatedAt: Date
+}
+```
 
 ```json [Formatted (SDK)]
 {

@@ -2,22 +2,24 @@
 outline: deep
 ---
 
-# Find One Event
+# Get Event
+
+<ApiEndpoint method="GET" path="/events/:id" />
 
 Retrieve a single event by its ID.
 
 ## Parameters
 
-| Parameter | Default | Values / Description |
-| --- | --- | --- |
-| `include` |  | `categories`, `pages`, `pages.blocks`, `pages.blocks.images`, `schedule-items`, `speakers`, `speakers.image`, `organisers`, `organisers.image` |
+| Parameter | Default | Values / Description                                                                                                                           |
+| --------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `include` |         | `categories`, `pages`, `pages.blocks`, `pages.blocks.images`, `schedule-items`, `speakers`, `speakers.image`, `organisers`, `organisers.image` |
 
 ## Request
 
 ::: code-group
 
 ```js [JavaScript]
-const Confetti = require('confetti')
+import Confetti from 'confetti'
 
 const confetti = new Confetti({ apiKey: 'your-key' })
 
@@ -34,6 +36,42 @@ curl "https://api.confetti.events/events/16500" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Event {
+  id: number
+  name: string
+  startDate: Date
+  endDate: Date
+  timeZone: string
+  slug: string
+  status: string
+  featureLevel: string
+  signupType: string
+  signupStartAt: Date
+  signupEndAt: Date
+  website: string
+  email: string
+  rsvpLimit: number
+  rsvpLeft: number
+  waitlisted: number
+  hasPassed: boolean
+  createdAt: Date
+  updatedAt: Date
+  workspaceId: number
+  shareTitle: string
+  shareDescription: string
+  summary: string
+  timeFormat: string
+  locale: string
+  primaryColor: string
+  contrastColor: string
+  waitlist: string
+  enableExtraGuests: boolean
+  maxExtraGuests: number
+  location: string
+}
+```
 
 ```json [Formatted (SDK)]
 {

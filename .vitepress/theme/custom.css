@@ -27,6 +27,16 @@
 :root {
   /* Centralized UI menu font size */
   --confetti-menu-font-size: 15px;
+  --confetti-sidebar-nav-top-padding: 14px;
+  --confetti-sidebar-group-gap: 14px;
+  --confetti-sidebar-divider-gap: 14px;
+  --confetti-sidebar-icon-text-gap: 6px;
+  --confetti-sidebar-subitem-text-line-height: 1.4;
+  --confetti-sidebar-level0-item-padding-bottom: 2px;
+  --confetti-sidebar-level1-item-padding-y: 1px;
+  --confetti-sidebar-level1-items-margin-top: 2px;
+  --confetti-sidebar-level1-link-min-height: 21px;
+  --confetti-sidebar-level1-link-line-height: 1.2;
 
   /* Brand colours */
   --vp-c-brand-1: #00b8cf;
@@ -40,12 +50,8 @@
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
   /* Home hero */
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: linear-gradient(
-    135deg,
-    #00c2db 0%,
-    #007281 100%
-  );
+  --vp-home-hero-name-color: var(--vp-c-brand-1);
+  --vp-home-hero-name-background: none;
   --vp-home-hero-image-background-image: linear-gradient(
     135deg,
     rgba(0, 194, 219, 0.25) 0%,
@@ -69,6 +75,26 @@
 html,
 body {
   font-size: 17px !important;
+}
+
+/* Center hero content when no right-side image is used */
+.VPHomeHero .container {
+  justify-content: center;
+}
+
+.VPHomeHero .main {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+}
+
+.VPHomeHero .main .name {
+  margin: 0 auto;
+}
+
+.VPHomeHero .actions {
+  justify-content: center;
 }
 
 /* Menus keep their own font sizes in VitePress; override via one variable */
@@ -101,9 +127,9 @@ body {
 .VPSidebarItem.level-1 .VPLink.link .text {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--confetti-sidebar-icon-text-gap);
   margin: 0;
-  line-height: 1.4;
+  line-height: var(--confetti-sidebar-subitem-text-line-height);
 }
 
 .VPSidebarItem.level-1 .VPLink.link .text::before {
@@ -150,7 +176,7 @@ body {
 }
 
 #VPSidebarNav {
-  padding-top: 14px !important;
+  padding-top: var(--confetti-sidebar-nav-top-padding) !important;
 }
 
 #VPSidebarNav > .group {
@@ -159,7 +185,7 @@ body {
   margin-top: 0 !important;
   border-bottom: 0 !important;
   padding-bottom: 0 !important;
-  margin-bottom: 14px !important;
+  margin-bottom: var(--confetti-sidebar-group-gap) !important;
 }
 
 #VPSidebarNav > .group:last-child {
@@ -183,19 +209,19 @@ body {
 #VPSidebarNav > .group:has(.VPLink.link[href='/docs/events/list']),
 #VPSidebarNav > .group:has(.VPLink.link[href='/docs/changelog']) {
   border-top: 1px solid var(--vp-c-divider) !important;
-  padding-top: 14px !important;
-  margin-top: 14px !important;
+  padding-top: var(--confetti-sidebar-divider-gap) !important;
+  margin-top: var(--confetti-sidebar-divider-gap) !important;
 }
 
 /* Compact sidebar spacing */
 #VPSidebarNav .VPSidebarItem.level-0 > .item {
-  padding-bottom: 2px !important;
+  padding-bottom: var(--confetti-sidebar-level0-item-padding-bottom) !important;
 }
 
 #VPSidebarNav .VPSidebarItem.level-1 > .item,
 #VPSidebarNav .VPSidebarItem.level-1 .VPLink.link {
-  padding-top: 1px !important;
-  padding-bottom: 1px !important;
+  padding-top: var(--confetti-sidebar-level1-item-padding-y) !important;
+  padding-bottom: var(--confetti-sidebar-level1-item-padding-y) !important;
 }
 
 /* Force tighter layout against VitePress defaults */
@@ -205,7 +231,7 @@ body {
 }
 
 #VPSidebarNav > .group .VPSidebarItem.level-0 > .items {
-  margin-top: 2px !important;
+  margin-top: var(--confetti-sidebar-level1-items-margin-top) !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
@@ -226,8 +252,8 @@ body {
 }
 
 #VPSidebarNav .VPSidebarItem.level-1 .VPLink.link {
-  min-height: 21px !important;
-  line-height: 1.2 !important;
+  min-height: var(--confetti-sidebar-level1-link-min-height) !important;
+  line-height: var(--confetti-sidebar-level1-link-line-height) !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }

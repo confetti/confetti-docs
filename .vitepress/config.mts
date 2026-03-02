@@ -89,7 +89,10 @@ export default defineConfig({
       '/api/': [
         {
           text: 'Getting Started',
-          items: [{ text: 'Introduction', link: '/api/' }],
+          items: [
+            { text: 'Introduction', link: '/api/' },
+            { text: 'Changelog', link: '/api/changelog' },
+          ],
         },
         {
           text: 'Events',
@@ -138,13 +141,6 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: 'Get Workspace', link: '/api/workspace/get' },
-          ],
-        },
-        {
-          text: 'More',
-          collapsed: false,
-          items: [
-            { text: 'Changelog', link: '/api/changelog' },
           ],
         },
       ],

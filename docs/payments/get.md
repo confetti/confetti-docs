@@ -1,0 +1,107 @@
+---
+outline: deep
+---
+
+# Get Payment
+
+<ApiEndpoint method="GET" path="/payments/:id" />
+
+Retrieve a single payment by its ID.
+
+## Request
+
+::: code-group
+
+```js [JavaScript]
+import Confetti from 'confetti'
+
+const confetti = new Confetti({ apiKey: 'your-key' })
+
+const payment = await confetti.payments.find(288298)
+```
+
+```sh [cURL]
+curl "https://api.confetti.events/payments/288298" \
+  -H "Authorization: apikey your-key"
+```
+
+:::
+
+## Response
+
+::: code-group
+
+```ts [TypeScript]
+interface Payment {
+  id: number
+  name: string
+  email: string
+  company: string
+  amount: number
+  vat: number
+  vatPercentage: number
+  commission: string
+  commissionVat: string
+  customer: string
+  token: string
+  currency: string
+  status: string
+  paidAt: Date
+}
+```
+
+```json [Formatted (SDK)]
+{
+  "name": "Foo Bar",
+  "email": "foo@bar.com",
+  "company": "The Company",
+  "amount": 13,
+  "vat": 3,
+  "vatPercentage": 30,
+  "token": "2447b4acef764836169b53c4",
+  "currency": "SEK",
+  "status": "paid",
+  "paidAt": "2020-03-09T20:05:10.000Z",
+  "commission": "5.65",
+  "commissionVat": "1.13",
+  "customer": {
+    "other": "Extra information"
+  },
+  "id": "288298",
+  "type": "payment",
+  "meta": {
+    "webhookType": "payment.paid"
+  }
+}
+```
+
+```json [Raw (JSON:API)]
+{
+  "data": {
+    "id": "288298",
+    "type": "payment",
+    "attributes": {
+      "name": "Foo Bar",
+      "email": "foo@bar.com",
+      "company": "The Company",
+      "amount": 13,
+      "vat": 3,
+      "vatPercentage": 30,
+      "token": "2447b4acef764836169b53c4",
+      "currency": "SEK",
+      "status": "paid",
+      "paidAt": "2020-03-09T20:05:10.000Z",
+      "commission": "5.65",
+      "commissionVat": "1.13",
+      "customer": {
+        "other": "Extra information"
+      }
+    }
+  },
+  "meta": {
+    "webhookType": "payment.paid"
+  }
+}
+```
+
+:::

@@ -1,5 +1,41 @@
 import { defineConfig } from 'vitepress'
 import llmstxt from 'vitepress-plugin-llmstxt'
+import { mkdirSync, writeFileSync, readdirSync, statSync } from 'node:fs'
+import { join, relative } from 'node:path'
+
+function generateRedirects(distDir: string) {
+  const apiDir = join(distDir, 'api')
+  const docsDir = join(distDir, 'docs')
+
+  function walk(dir: string): string[] {
+    const files: string[] = []
+    for (const entry of readdirSync(dir)) {
+      const full = join(dir, entry)
+      if (statSync(full).isDirectory()) {
+        files.push(...walk(full))
+      } else if (entry.endsWith('.html')) {
+        files.push(full)
+      }
+    }
+    return files
+  }
+
+  function writeRedirect(dest: string, target: string) {
+    mkdirSync(join(dest, '..'), { recursive: true })
+    writeFileSync(
+      dest,
+      `<!DOCTYPE html><meta http-equiv="refresh" content="0;url=${target}"><link rel="canonical" href="${target}"><script>location.replace("${target}")</script>`,
+    )
+  }
+
+  for (const file of walk(apiDir)) {
+    const rel = relative(apiDir, file)
+    const target = '/' + join('api', rel).replace(/\.html$/, '').replace(/\/index$/, '/')
+    writeRedirect(join(docsDir, rel), target)
+  }
+
+  writeRedirect(join(docsDir, 'intro.html'), '/api/')
+}
 
 export default defineConfig({
   title: 'Confetti API',
@@ -28,8 +64,8 @@ export default defineConfig({
     siteTitle: 'Confetti API',
 
     nav: [
-      { text: 'Docs', link: '/docs/' },
-      { text: 'Changelog', link: '/docs/changelog' },
+      { text: 'Docs', link: '/api/' },
+      { text: 'Changelog', link: '/api/changelog' },
       {
         text: 'Resources',
         items: [
@@ -50,65 +86,65 @@ export default defineConfig({
     ],
 
     sidebar: {
-      '/docs/': [
+      '/api/': [
         {
           text: 'Getting Started',
-          items: [{ text: 'Introduction', link: '/docs/' }],
+          items: [{ text: 'Introduction', link: '/api/' }],
         },
         {
           text: 'Events',
           collapsed: false,
           items: [
-            { text: 'List Events', link: '/docs/events/list' },
-            { text: 'Get Event', link: '/docs/events/get' },
+            { text: 'List Events', link: '/api/events/list' },
+            { text: 'Get Event', link: '/api/events/get' },
           ],
         },
         {
           text: 'Tickets',
           collapsed: false,
           items: [
-            { text: 'List Tickets', link: '/docs/tickets/list' },
-            { text: 'Get Ticket', link: '/docs/tickets/get' },
-            { text: 'Create Ticket', link: '/docs/tickets/create' },
+            { text: 'List Tickets', link: '/api/tickets/list' },
+            { text: 'Get Ticket', link: '/api/tickets/get' },
+            { text: 'Create Ticket', link: '/api/tickets/create' },
           ],
         },
         {
           text: 'Contacts',
           collapsed: false,
           items: [
-            { text: 'List Contacts', link: '/docs/contacts/list' },
-            { text: 'Get Contact', link: '/docs/contacts/get' },
-            { text: 'Create Contact', link: '/docs/contacts/create' },
+            { text: 'List Contacts', link: '/api/contacts/list' },
+            { text: 'Get Contact', link: '/api/contacts/get' },
+            { text: 'Create Contact', link: '/api/contacts/create' },
           ],
         },
         {
           text: 'Payments',
           collapsed: false,
           items: [
-            { text: 'List Payments', link: '/docs/payments/list' },
-            { text: 'Get Payment', link: '/docs/payments/get' },
+            { text: 'List Payments', link: '/api/payments/list' },
+            { text: 'Get Payment', link: '/api/payments/get' },
           ],
         },
         {
           text: 'Webhooks',
           collapsed: false,
           items: [
-            { text: 'List Webhooks', link: '/docs/webhooks/list' },
-            { text: 'Get Webhook', link: '/docs/webhooks/get' },
+            { text: 'List Webhooks', link: '/api/webhooks/list' },
+            { text: 'Get Webhook', link: '/api/webhooks/get' },
           ],
         },
         {
           text: 'Workspace',
           collapsed: false,
           items: [
-            { text: 'Get Workspace', link: '/docs/workspace/get' },
+            { text: 'Get Workspace', link: '/api/workspace/get' },
           ],
         },
         {
           text: 'More',
           collapsed: false,
           items: [
-            { text: 'Changelog', link: '/docs/changelog' },
+            { text: 'Changelog', link: '/api/changelog' },
           ],
         },
       ],
@@ -127,6 +163,10 @@ export default defineConfig({
     search: {
       provider: 'local',
     },
+  },
+
+  buildEnd({ outDir }) {
+    generateRedirects(outDir)
   },
 
   vite: {

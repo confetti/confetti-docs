@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /docs/
+      link: /api/
     - theme: alt
       text: Node.js SDK
       link: https://github.com/confetti/confetti-node

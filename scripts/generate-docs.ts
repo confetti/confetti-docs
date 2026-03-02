@@ -9,7 +9,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const require = createRequire(join(ROOT, 'package.json'))
 const raw = require('confetti')
 const confetti: ConfettiPackage = raw['module.exports'] ?? raw
-const DOCS_DIR = join(ROOT, 'docs')
+const DOCS_DIR = join(ROOT, 'api')
 
 const CHANGELOG_URL =
   'https://raw.githubusercontent.com/confetti/confetti-node/master/CHANGELOG.md'
@@ -507,4 +507,4 @@ for (const { key, ops } of resources) {
 
 await generateChangelog()
 
-console.log('Generated API documentation in docs/')
+console.log('Generated API documentation in api/')

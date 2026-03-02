@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "confetti": "^3.0.4",
-    "lucide-vue-next": "^0.575.0",
+    "lucide-vue-next": "^0.576.0",
     "markdown-table": "^3.0.4"
   },
   "devDependencies": {

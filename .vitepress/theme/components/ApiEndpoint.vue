@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ExternalLink } from 'lucide-vue-next'
-
 defineProps<{
   method: string
   path: string
@@ -11,15 +9,6 @@ defineProps<{
   <div class="api-endpoint">
     <span :class="['api-method', `method-${method.toLowerCase()}`]">{{ method }}</span>
     <code class="api-path">{{ path }}</code>
-    <a
-      :href="`https://api.confetti.events${path.replace(/:id/, '1')}`"
-      target="_blank"
-      rel="noopener"
-      class="api-link"
-      title="Open in browser"
-    >
-      <ExternalLink :size="14" />
-    </a>
   </div>
 </template>
 
@@ -89,17 +78,5 @@ defineProps<{
   color: var(--vp-c-text-1);
   background: none !important;
   padding: 0;
-}
-
-.api-link {
-  display: inline-flex;
-  align-items: center;
-  color: var(--vp-c-text-3);
-  transition: color 0.2s;
-  margin-left: auto;
-}
-
-.api-link:hover {
-  color: var(--vp-c-brand-1);
 }
 </style>

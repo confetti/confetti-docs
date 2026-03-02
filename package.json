@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "npm run docs:dev",
     "docs:generate": "tsx scripts/generate-docs.ts",
     "docs:dev": "npm run docs:generate && vitepress dev",
     "docs:build": "npm run docs:generate && vitepress build",

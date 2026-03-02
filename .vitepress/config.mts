@@ -119,11 +119,6 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/confetti/confetti-docs' },
     ],
 
-    footer: {
-      message:
-        'Built by <a href="https://confetti.events">Confetti</a> — the all-in-one event management platform.',
-    },
-
     editLink: {
       pattern:
         'https://github.com/confetti/confetti-docs/edit/main/:path',

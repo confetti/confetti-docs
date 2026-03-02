@@ -44,6 +44,13 @@
   --vp-c-brand-3: #007281;
   --vp-c-brand-soft: rgba(0, 194, 219, 0.12);
 
+  /* Inline code – slightly bolder for legibility in light mode */
+  --vp-code-color: #393a3b;
+  --vp-code-bg: rgba(0, 0, 0, 0.06);
+
+  /* Code blocks */
+  --vp-code-font-size: 0.8125em;
+
   /* Typography */
   --vp-font-family-base: 'Source Sans 3', 'Source Sans Pro', -apple-system,
     BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
@@ -59,16 +66,16 @@
   );
   --vp-home-hero-image-filter: blur(44px);
 
-  /* Buttons – brand variant */
-  --vp-button-brand-border: transparent;
-  --vp-button-brand-text: #fff;
-  --vp-button-brand-bg: #00b8cf;
-  --vp-button-brand-hover-border: transparent;
-  --vp-button-brand-hover-text: #fff;
-  --vp-button-brand-hover-bg: #029aae;
-  --vp-button-brand-active-border: transparent;
-  --vp-button-brand-active-text: #fff;
-  --vp-button-brand-active-bg: #007281;
+  /* Buttons – brand variant (outlined) */
+  --vp-button-brand-border: var(--vp-c-brand-1);
+  --vp-button-brand-text: var(--vp-c-brand-1);
+  --vp-button-brand-bg: transparent;
+  --vp-button-brand-hover-border: var(--vp-c-brand-2);
+  --vp-button-brand-hover-text: var(--vp-c-brand-2);
+  --vp-button-brand-hover-bg: transparent;
+  --vp-button-brand-active-border: var(--vp-c-brand-3);
+  --vp-button-brand-active-text: var(--vp-c-brand-3);
+  --vp-button-brand-active-bg: transparent;
 }
 
 /* VitePress default theme sets html/body to 16px in base.css */
@@ -77,20 +84,61 @@ body {
   font-size: 17px !important;
 }
 
-/* Center hero content when no right-side image is used */
+/* Vertically center hero + features as one unit on desktop */
+.VPHome {
+  min-height: calc(100vh - var(--vp-nav-height)) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  padding-bottom: 0 !important;
+}
+
+.VPHome .VPHero {
+  padding: 0 !important;
+  flex: 0 0 auto !important;
+  width: 100%;
+  margin-top: auto !important;
+}
+
+.VPHome .VPHomeFeatures {
+  padding-top: 24px !important;
+  padding-bottom: 0 !important;
+  flex: 0 0 auto !important;
+  width: 100%;
+  margin-bottom: auto !important;
+}
+
+.VPFeature .title {
+  font-size: 17px !important;
+}
+
+.VPFeature .details {
+  font-size: 15px !important;
+  line-height: 1.45 !important;
+}
+
 .VPHomeHero .container {
-  justify-content: center;
+  display: flex !important;
+  justify-content: center !important;
+  text-align: center;
 }
 
 .VPHomeHero .main {
   max-width: 760px;
-  margin: 0 auto;
+  margin: 0 auto 30px !important;
   text-align: center;
   align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding:20px;
 }
 
-.VPHomeHero .main .name {
-  margin: 0 auto;
+.VPHomeHero .main .name,
+.VPHomeHero .main .text,
+.VPHomeHero .main .tagline {
+  max-width: 100%;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 .VPHomeHero .actions {
@@ -115,9 +163,42 @@ body {
   --vp-c-brand-3: #a5e9f1;
   --vp-c-brand-soft: rgba(57, 204, 224, 0.12);
 
-  --vp-button-brand-bg: #00b8cf;
-  --vp-button-brand-hover-bg: #39cce0;
-  --vp-button-brand-active-bg: #029aae;
+  /* Reset inline code to VitePress dark defaults */
+  --vp-code-color: var(--vp-c-text-code);
+  --vp-code-bg: var(--vp-c-default-soft);
+
+  --vp-button-brand-border: var(--vp-c-brand-1);
+  --vp-button-brand-text: var(--vp-c-brand-1);
+  --vp-button-brand-bg: transparent;
+  --vp-button-brand-hover-border: var(--vp-c-brand-2);
+  --vp-button-brand-hover-text: var(--vp-c-brand-2);
+  --vp-button-brand-hover-bg: transparent;
+  --vp-button-brand-active-border: var(--vp-c-brand-3);
+  --vp-button-brand-active-text: var(--vp-c-brand-3);
+  --vp-button-brand-active-bg: transparent;
+}
+
+.dark .VPFeature .VPImage {
+  filter: invert(1);
+}
+
+/* Pill-shaped outlined hero buttons */
+.VPHomeHero .VPButton {
+  border-radius: 9999px !important;
+  font-size: 16px !important;
+  border-width: 2px !important;
+}
+
+:root {
+  --vp-button-alt-border: var(--vp-c-text-1);
+  --vp-button-alt-text: var(--vp-c-text-1);
+  --vp-button-alt-bg: transparent;
+  --vp-button-alt-hover-border: var(--vp-c-text-2);
+  --vp-button-alt-hover-text: var(--vp-c-text-2);
+  --vp-button-alt-hover-bg: transparent;
+  --vp-button-alt-active-border: var(--vp-c-text-3);
+  --vp-button-alt-active-text: var(--vp-c-text-3);
+  --vp-button-alt-active-bg: transparent;
 }
 
 /* ------------------------------------------------------------------ */

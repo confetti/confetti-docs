@@ -26,12 +26,6 @@ Authenticate by passing your API key in the `Authorization` header. Generate a k
 
 ::: code-group
 
-```ts [TypeScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-```
-
 ```js [JavaScript]
 import Confetti from 'confetti'
 

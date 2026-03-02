@@ -29,23 +29,6 @@ Create a new ticket.
 
 ::: code-group
 
-```ts [TypeScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const ticket = await confetti.tickets.create({
-  eventId: 1,
-  firstName: 'Jane',
-  lastName: 'Doe',
-  email: 'jane@example.com',
-  status: 'attending',
-  phone: '+46701234567',
-  comment: 'A note',
-  sendEmailConfirmation: true,
-})
-```
-
 ```js [JavaScript]
 import Confetti from 'confetti'
 

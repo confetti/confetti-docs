@@ -12,14 +12,6 @@ Retrieve a single workspace by its ID.
 
 ::: code-group
 
-```ts [TypeScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const workspace = await confetti.workspaces.find(1)
-```
-
 ```js [JavaScript]
 import Confetti from 'confetti'
 
@@ -38,6 +30,24 @@ curl "https://api.confetti.events/workspaces/1" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Workspace {
+  id: number
+  name: string
+  timeZone: string
+  slug: string
+  featureLevel: string
+  website: string
+  email: string
+  createdAt: Date
+  updatedAt: Date
+  shareTitle: string
+  shareDescription: string
+  summary: string
+  primaryColor: string
+}
+```
 
 ```json [Formatted (SDK)]
 {

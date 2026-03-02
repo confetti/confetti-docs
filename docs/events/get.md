@@ -18,14 +18,6 @@ Retrieve a single event by its ID.
 
 ::: code-group
 
-```ts [TypeScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const event = await confetti.events.find(16500)
-```
-
 ```js [JavaScript]
 import Confetti from 'confetti'
 
@@ -44,6 +36,42 @@ curl "https://api.confetti.events/events/16500" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Event {
+  id: number
+  name: string
+  startDate: Date
+  endDate: Date
+  timeZone: string
+  slug: string
+  status: string
+  featureLevel: string
+  signupType: string
+  signupStartAt: Date
+  signupEndAt: Date
+  website: string
+  email: string
+  rsvpLimit: number
+  rsvpLeft: number
+  waitlisted: number
+  hasPassed: boolean
+  createdAt: Date
+  updatedAt: Date
+  workspaceId: number
+  shareTitle: string
+  shareDescription: string
+  summary: string
+  timeFormat: string
+  locale: string
+  primaryColor: string
+  contrastColor: string
+  waitlist: string
+  enableExtraGuests: boolean
+  maxExtraGuests: number
+  location: string
+}
+```
 
 ```json [Formatted (SDK)]
 {

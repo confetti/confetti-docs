@@ -12,14 +12,6 @@ Retrieve a single contact by its ID.
 
 ::: code-group
 
-```ts [TypeScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const contact = await confetti.contacts.find(588032)
-```
-
 ```js [JavaScript]
 import Confetti from 'confetti'
 
@@ -38,6 +30,25 @@ curl "https://api.confetti.events/contacts/588032" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Contact {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  token: string
+  status: string
+  comment: string
+  lastSeen: Date
+  deletionRequestedAt: Date
+  createdAt: Date
+  updatedAt: Date
+  organisationId: number
+  company: string
+}
+```
 
 ```json [Formatted (SDK)]
 {

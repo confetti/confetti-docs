@@ -22,17 +22,6 @@ Retrieve a paginated list of webhooks.
 
 ::: code-group
 
-```ts [TypeScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const webhooks = await confetti.webhooks.findAll({
-  filter: { eventId: 1 },
-  page: { size: 10, number: 1 },
-})
-```
-
 ```js [JavaScript]
 import Confetti from 'confetti'
 
@@ -54,6 +43,18 @@ curl "https://api.confetti.events/webhooks?filter[eventId]=1" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Webhook {
+  id: number
+  type: string
+  url: string
+  provider: string
+  status: string
+  createdAt: Date
+  updatedAt: Date
+}
+```
 
 ```json [Formatted (SDK)]
 [

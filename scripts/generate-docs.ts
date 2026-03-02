@@ -34,6 +34,11 @@ interface Filter {
   values?: FilterValue[]
 }
 
+interface ReadAttribute {
+  key: string
+  type: string
+}
+
 interface CreateAttribute {
   key: string
   label: string
@@ -58,7 +63,7 @@ interface Model {
   filters?: Record<string, Filter>
   includes?: string[]
   operations?: {
-    read?: unknown
+    read?: { attributes: ReadAttribute[] }
     create?: { attributes: CreateAttribute[] }
   }
 }
@@ -144,6 +149,9 @@ class MdBuilder {
 
 const json = (obj: unknown): string => JSON.stringify(obj, null, 2)
 
+const capitalize = (s: string): string =>
+  s.charAt(0).toUpperCase() + s.slice(1)
+
 const humanize = (key: string): string =>
   key.replace(/([A-Z])/g, ' $1').replace(/^./, (s) => s.toUpperCase())
 
@@ -151,7 +159,27 @@ const escapeCell = (s: unknown): string =>
   String(s ?? '').replace(/\|/g, '\\|')
 
 // ---------------------------------------------------------------------------
-// Example values (shared across TS, JS and cURL output)
+// TypeScript interface builder
+// ---------------------------------------------------------------------------
+
+const ATTR_TYPE_MAP: Record<string, string> = {
+  string: 'string',
+  number: 'number',
+  boolean: 'boolean',
+  date: 'Date',
+  object: 'Record<string, unknown>',
+  array: 'unknown[]',
+}
+
+function buildTsInterface(name: string, attrs: ReadAttribute[]): string {
+  const fields = attrs
+    .map((a) => `  ${a.key}: ${ATTR_TYPE_MAP[a.type] ?? 'unknown'}`)
+    .join('\n')
+  return `interface ${name} {\n${fields}\n}`
+}
+
+// ---------------------------------------------------------------------------
+// Example values (shared across JS and cURL output)
 // ---------------------------------------------------------------------------
 
 const KNOWN_EXAMPLES: Record<string, { js: string; raw: unknown }> = {
@@ -292,6 +320,9 @@ function generateListPage(key: string, model: Model): string {
     '  -H "Authorization: apikey your-key"',
   ].join('\n')
 
+  const readAttrs = model.operations?.read?.attributes ?? []
+  const tsInterface = buildTsInterface(capitalize(key), readAttrs)
+
   return new MdBuilder()
     .frontmatter({ outline: 'deep' })
     .heading(1, `List ${name}s`)
@@ -302,12 +333,12 @@ function generateListPage(key: string, model: Model): string {
     .blockquote('Fields marked with **\\*** are required.')
     .heading(2, 'Request')
     .codeGroup([
-      { label: 'TypeScript', lang: 'ts', code: sdk },
       { label: 'JavaScript', lang: 'js', code: sdk },
       { label: 'cURL', lang: 'sh', code: curl },
     ])
     .heading(2, 'Response')
     .codeGroup([
+      { label: 'TypeScript', lang: 'ts', code: tsInterface },
       { label: 'Formatted (SDK)', lang: 'json', code: json(model.sample.multiple.formatted) },
       { label: 'Raw (JSON:API)', lang: 'json', code: json(model.sample.multiple.raw) },
     ])
@@ -332,6 +363,9 @@ function generateGetPage(key: string, model: Model): string {
     '  -H "Authorization: apikey your-key"',
   ].join('\n')
 
+  const readAttrs = model.operations?.read?.attributes ?? []
+  const tsInterface = buildTsInterface(capitalize(key), readAttrs)
+
   const md = new MdBuilder()
     .frontmatter({ outline: 'deep' })
     .heading(1, `Get ${name}`)
@@ -346,12 +380,12 @@ function generateGetPage(key: string, model: Model): string {
   return md
     .heading(2, 'Request')
     .codeGroup([
-      { label: 'TypeScript', lang: 'ts', code: sdk },
       { label: 'JavaScript', lang: 'js', code: sdk },
       { label: 'cURL', lang: 'sh', code: curl },
     ])
     .heading(2, 'Response')
     .codeGroup([
+      { label: 'TypeScript', lang: 'ts', code: tsInterface },
       { label: 'Formatted (SDK)', lang: 'json', code: json(model.sample.single.formatted) },
       { label: 'Raw (JSON:API)', lang: 'json', code: json(model.sample.single.raw) },
     ])
@@ -405,7 +439,6 @@ function generateCreatePage(key: string, model: Model): string {
     .blockquote('Fields marked with **\\*** are required.')
     .heading(2, 'Request')
     .codeGroup([
-      { label: 'TypeScript', lang: 'ts', code: sdk },
       { label: 'JavaScript', lang: 'js', code: sdk },
       { label: 'cURL', lang: 'sh', code: curl },
     ])

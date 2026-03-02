@@ -12,14 +12,6 @@ Retrieve a single payment by its ID.
 
 ::: code-group
 
-```ts [TypeScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const payment = await confetti.payments.find(288298)
-```
-
 ```js [JavaScript]
 import Confetti from 'confetti'
 
@@ -38,6 +30,25 @@ curl "https://api.confetti.events/payments/288298" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Payment {
+  id: number
+  name: string
+  email: string
+  company: string
+  amount: number
+  vat: number
+  vatPercentage: number
+  commission: string
+  commissionVat: string
+  customer: string
+  token: string
+  currency: string
+  status: string
+  paidAt: Date
+}
+```
 
 ```json [Formatted (SDK)]
 {

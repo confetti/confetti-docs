@@ -27,21 +27,6 @@ Create a new contact.
 
 ::: code-group
 
-```ts [TypeScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const contact = await confetti.contacts.create({
-  firstName: 'Jane',
-  lastName: 'Doe',
-  email: 'jane@example.com',
-  phone: '+46701234567',
-  comment: 'A note',
-  workspaceId: 1,
-})
-```
-
 ```js [JavaScript]
 import Confetti from 'confetti'
 

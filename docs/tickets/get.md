@@ -18,14 +18,6 @@ Retrieve a single ticket by its ID.
 
 ::: code-group
 
-```ts [TypeScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const ticket = await confetti.tickets.find(3344691)
-```
-
 ```js [JavaScript]
 import Confetti from 'confetti'
 
@@ -44,6 +36,41 @@ curl "https://api.confetti.events/tickets/3344691" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Ticket {
+  id: number
+  persons: number
+  hashid: string
+  description: string
+  price: number
+  currency: string
+  firstName: string
+  lastName: string
+  name: string
+  email: string
+  phone: string
+  company: string
+  token: string
+  status: string
+  emailStatus: string
+  checkinAt: Date
+  waitlistAt: Date
+  startDate: Date
+  endDate: Date
+  values: string
+  comment: string
+  guests: number
+  termsAcceptedAt: Date
+  deletionRequestedAt: Date
+  createdAt: Date
+  updatedAt: Date
+  ticketBatchId: number
+  paymentId: number
+  eventId: number
+  contactId: number
+}
+```
 
 ```json [Formatted (SDK)]
 {

@@ -24,17 +24,6 @@ Retrieve a paginated list of events.
 
 ::: code-group
 
-```ts [TypeScript]
-import Confetti from 'confetti'
-
-const confetti = new Confetti({ apiKey: 'your-key' })
-
-const events = await confetti.events.findAll({
-  filter: { signupType: 'rsvp' },
-  page: { size: 10, number: 1 },
-})
-```
-
 ```js [JavaScript]
 import Confetti from 'confetti'
 
@@ -56,6 +45,42 @@ curl "https://api.confetti.events/events?filter[signupType]=rsvp" \
 ## Response
 
 ::: code-group
+
+```ts [TypeScript]
+interface Event {
+  id: number
+  name: string
+  startDate: Date
+  endDate: Date
+  timeZone: string
+  slug: string
+  status: string
+  featureLevel: string
+  signupType: string
+  signupStartAt: Date
+  signupEndAt: Date
+  website: string
+  email: string
+  rsvpLimit: number
+  rsvpLeft: number
+  waitlisted: number
+  hasPassed: boolean
+  createdAt: Date
+  updatedAt: Date
+  workspaceId: number
+  shareTitle: string
+  shareDescription: string
+  summary: string
+  timeFormat: string
+  locale: string
+  primaryColor: string
+  contrastColor: string
+  waitlist: string
+  enableExtraGuests: boolean
+  maxExtraGuests: number
+  location: string
+}
+```
 
 ```json [Formatted (SDK)]
 [

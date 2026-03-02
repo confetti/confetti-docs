@@ -78,6 +78,13 @@
   --vp-button-brand-active-bg: transparent;
 }
 
+/* Light-mode-only overrides */
+:root:not(.dark) {
+  --vp-c-bg-soft: #e8f5f6;
+  --vp-c-text-1: #00353c;
+  --vp-c-text-2: #01444d;
+}
+
 /* VitePress default theme sets html/body to 16px in base.css */
 html,
 body {

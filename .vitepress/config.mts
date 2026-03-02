@@ -24,7 +24,7 @@ export default defineConfig({
   lastUpdated: true,
 
   themeConfig: {
-    logo: '/confetti-logo.svg',
+    logo: '/favicon.png',
     siteTitle: 'Confetti API',
 
     nav: [

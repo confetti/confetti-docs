@@ -47,7 +47,6 @@ export default defineConfig({
           },
         ],
       },
-      { text: 'confetti.events', link: 'https://confetti.events' },
     ],
 
     sidebar: {
@@ -116,7 +115,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/confetti/confetti-docs' },
+      { icon: 'github', link: 'https://github.com/confetti/confetti-node' },
     ],
 
     editLink: {

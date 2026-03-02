@@ -25,6 +25,9 @@
 /* ------------------------------------------------------------------ */
 
 :root {
+  /* Centralized UI menu font size */
+  --confetti-menu-font-size: 15px;
+
   /* Brand colours */
   --vp-c-brand-1: #00b8cf;
   --vp-c-brand-2: #029aae;
@@ -60,6 +63,20 @@
   --vp-button-brand-active-border: transparent;
   --vp-button-brand-active-text: #fff;
   --vp-button-brand-active-bg: #007281;
+}
+
+/* VitePress default theme sets html/body to 16px in base.css */
+html,
+body {
+  font-size: 17px !important;
+}
+
+/* Menus keep their own font sizes in VitePress; override via one variable */
+.VPNavBarMenuLink,
+.VPNavScreenMenuLink,
+.VPSidebarItem .text,
+.VPSidebarItem .link {
+  font-size: var(--confetti-menu-font-size) !important;
 }
 
 /* ------------------------------------------------------------------ */

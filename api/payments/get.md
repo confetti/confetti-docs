@@ -42,7 +42,7 @@ interface Payment {
   vatPercentage: number
   commission: string
   commissionVat: string
-  customer: string
+  customer: Record<string, unknown>
   token: string
   currency: string
   status: string
@@ -67,11 +67,7 @@ interface Payment {
   "customer": {
     "other": "Extra information"
   },
-  "id": "288298",
-  "type": "payment",
-  "meta": {
-    "webhookType": "payment.paid"
-  }
+  "id": "288298"
 }
 ```
 

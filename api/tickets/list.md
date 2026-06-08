@@ -19,7 +19,7 @@ Retrieve a paginated list of tickets.
 | `filter[status]`      |         | `attending`, `waitlist`, `declined`, `invited`, `consumed`, `deletion-requested` |
 | `page[size]`          | `50`    | Maximum number of results per page                                               |
 | `page[number]`        | `1`     | Page number                                                                      |
-| `include`             |         | `addons`                                                                         |
+| `include`             |         | `addons`, `formattedValues`, `parentTicket`, `guestTickets`                      |
 
 > Fields marked with **\*** are required.
 
@@ -70,7 +70,7 @@ interface Ticket {
   waitlistAt: Date
   startDate: Date
   endDate: Date
-  values: string
+  values: Record<string, unknown>
   comment: string
   guests: number
   termsAcceptedAt: Date
@@ -81,6 +81,7 @@ interface Ticket {
   paymentId: number
   eventId: number
   contactId: number
+  formattedValues: unknown[]
 }
 ```
 
@@ -121,8 +122,7 @@ interface Ticket {
     "paymentId": 288297,
     "eventId": 16969,
     "contactId": 112395,
-    "id": "3344691",
-    "type": "ticket"
+    "id": "3344691"
   },
   {
     "persons": 1,
@@ -159,8 +159,7 @@ interface Ticket {
     "paymentId": 288297,
     "eventId": 16969,
     "contactId": 112395,
-    "id": "3344691",
-    "type": "ticket"
+    "id": "3344691"
   }
 ]
 ```

@@ -100,6 +100,46 @@ export default defineConfig({
           items: [
             { text: 'List Events', link: '/api/events/list' },
             { text: 'Get Event', link: '/api/events/get' },
+            { text: 'Create Event', link: '/api/events/create' },
+            { text: 'Update Event', link: '/api/events/update' },
+          ],
+        },
+        {
+          text: 'Pages',
+          collapsed: true,
+          items: [
+            { text: 'List Pages', link: '/api/pages/list' },
+            { text: 'Get Page', link: '/api/pages/get' },
+            { text: 'Create Page', link: '/api/pages/create' },
+            { text: 'Update Page', link: '/api/pages/update' },
+          ],
+        },
+        {
+          text: 'Blocks',
+          collapsed: true,
+          items: [
+            { text: 'List Blocks', link: '/api/blocks/list' },
+            { text: 'Get Block', link: '/api/blocks/get' },
+            { text: 'Create Block', link: '/api/blocks/create' },
+            { text: 'Update Block', link: '/api/blocks/update' },
+          ],
+        },
+        {
+          text: 'Images',
+          collapsed: true,
+          items: [
+            { text: 'List Images', link: '/api/images/list' },
+            { text: 'Get Image', link: '/api/images/get' },
+            { text: 'Create Image', link: '/api/images/create' },
+            { text: 'Update Image', link: '/api/images/update' },
+          ],
+        },
+        {
+          text: 'Ticket Batches',
+          collapsed: true,
+          items: [
+            { text: 'List Ticket Batches', link: '/api/ticket-batches/list' },
+            { text: 'Get Ticket Batch', link: '/api/ticket-batches/get' },
           ],
         },
         {
@@ -109,11 +149,12 @@ export default defineConfig({
             { text: 'List Tickets', link: '/api/tickets/list' },
             { text: 'Get Ticket', link: '/api/tickets/get' },
             { text: 'Create Ticket', link: '/api/tickets/create' },
+            { text: 'Update Ticket', link: '/api/tickets/update' },
           ],
         },
         {
           text: 'Contacts',
-          collapsed: false,
+          collapsed: true,
           items: [
             { text: 'List Contacts', link: '/api/contacts/list' },
             { text: 'Get Contact', link: '/api/contacts/get' },
@@ -122,23 +163,93 @@ export default defineConfig({
         },
         {
           text: 'Payments',
-          collapsed: false,
+          collapsed: true,
           items: [
             { text: 'List Payments', link: '/api/payments/list' },
             { text: 'Get Payment', link: '/api/payments/get' },
           ],
         },
         {
+          text: 'Forms',
+          collapsed: true,
+          items: [
+            { text: 'Get Form', link: '/api/forms/get' },
+          ],
+        },
+        {
+          text: 'Form Fields',
+          collapsed: true,
+          items: [
+            { text: 'Get Form Field', link: '/api/form-fields/get' },
+            { text: 'Create Form Field', link: '/api/form-fields/create' },
+            { text: 'Update Form Field', link: '/api/form-fields/update' },
+          ],
+        },
+        {
+          text: 'Schedule Items',
+          collapsed: true,
+          items: [
+            { text: 'Get Schedule Item', link: '/api/schedule-items/get' },
+            { text: 'Create Schedule Item', link: '/api/schedule-items/create' },
+            { text: 'Update Schedule Item', link: '/api/schedule-items/update' },
+          ],
+        },
+        {
+          text: 'Speakers',
+          collapsed: true,
+          items: [
+            { text: 'Get Speaker', link: '/api/speakers/get' },
+            { text: 'Create Speaker', link: '/api/speakers/create' },
+            { text: 'Update Speaker', link: '/api/speakers/update' },
+          ],
+        },
+        {
+          text: 'Organisers',
+          collapsed: true,
+          items: [
+            { text: 'Get Organiser', link: '/api/organisers/get' },
+            { text: 'Create Organiser', link: '/api/organisers/create' },
+            { text: 'Update Organiser', link: '/api/organisers/update' },
+          ],
+        },
+        {
+          text: 'Sponsors',
+          collapsed: true,
+          items: [
+            { text: 'Get Sponsor', link: '/api/sponsors/get' },
+            { text: 'Create Sponsor', link: '/api/sponsors/create' },
+            { text: 'Update Sponsor', link: '/api/sponsors/update' },
+          ],
+        },
+        {
+          text: 'Sponsor Levels',
+          collapsed: true,
+          items: [
+            { text: 'Get Sponsor Level', link: '/api/sponsor-levels/get' },
+            { text: 'Create Sponsor Level', link: '/api/sponsor-levels/create' },
+            { text: 'Update Sponsor Level', link: '/api/sponsor-levels/update' },
+          ],
+        },
+        {
+          text: 'Categories',
+          collapsed: true,
+          items: [
+            { text: 'List Categories', link: '/api/categories/list' },
+            { text: 'Get Category', link: '/api/categories/get' },
+          ],
+        },
+        {
           text: 'Webhooks',
-          collapsed: false,
+          collapsed: true,
           items: [
             { text: 'List Webhooks', link: '/api/webhooks/list' },
             { text: 'Get Webhook', link: '/api/webhooks/get' },
+            { text: 'Create Webhook', link: '/api/webhooks/create' },
           ],
         },
         {
           text: 'Workspace',
-          collapsed: false,
+          collapsed: true,
           items: [
             { text: 'Get Workspace', link: '/api/workspace/get' },
           ],

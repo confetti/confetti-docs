@@ -52,8 +52,7 @@ interface Workspace {
 ```json [Formatted (SDK)]
 {
   "id": 1,
-  "name": "My workspace",
-  "type": "workspace"
+  "name": "My workspace"
 }
 ```
 

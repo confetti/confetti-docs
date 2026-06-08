@@ -76,8 +76,7 @@ interface Contact {
     "createdAt": "2022-01-05T15:33:13.171Z",
     "updatedAt": "2022-01-05T15:33:13.171Z",
     "organisationId": 57,
-    "company": "Company AB",
-    "type": "contact"
+    "company": "Company AB"
   },
   {
     "id": "588032",
@@ -92,8 +91,7 @@ interface Contact {
     "createdAt": "2022-01-05T15:33:13.171Z",
     "updatedAt": "2022-01-05T15:33:13.171Z",
     "organisationId": 57,
-    "company": "Company AB",
-    "type": "contact"
+    "company": "Company AB"
   }
 ]
 ```

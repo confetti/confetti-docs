@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module'
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { markdownTable } from 'markdown-table'
@@ -37,6 +37,7 @@ interface Filter {
 interface ReadAttribute {
   key: string
   type: string
+  description?: string
 }
 
 interface CreateAttribute {
@@ -44,9 +45,11 @@ interface CreateAttribute {
   label: string
   type: string
   required?: boolean
-  multiple?: boolean
   values?: string[]
+  description?: string
   helpText?: string
+  itemType?: string
+  children?: CreateAttribute[]
 }
 
 interface SampleSet {
@@ -65,6 +68,7 @@ interface Model {
   operations?: {
     read?: { attributes: ReadAttribute[] }
     create?: { attributes: CreateAttribute[] }
+    update?: { attributes: CreateAttribute[] }
   }
 }
 
@@ -72,9 +76,12 @@ interface ConfettiPackage {
   models: Record<string, Model>
 }
 
+type Op = 'list' | 'get' | 'create' | 'update'
+
 interface ResourceConfig {
   key: string
-  ops: Array<'list' | 'get' | 'create'>
+  dir?: string
+  ops: Op[]
 }
 
 interface CodeTab {
@@ -152,11 +159,18 @@ const json = (obj: unknown): string => JSON.stringify(obj, null, 2)
 const capitalize = (s: string): string =>
   s.charAt(0).toUpperCase() + s.slice(1)
 
-const humanize = (key: string): string =>
-  key.replace(/([A-Z])/g, ' $1').replace(/^./, (s) => s.toUpperCase())
-
 const escapeCell = (s: unknown): string =>
-  String(s ?? '').replace(/\|/g, '\\|')
+  String(s ?? '')
+    .replace(/\|/g, '\\|')
+    .replace(/\n/g, ' ')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+
+const pluralize = (name: string): string => {
+  if (/(s|x|z|ch|sh)$/i.test(name)) return `${name}es`
+  if (/[^aeiou]y$/i.test(name)) return `${name.slice(0, -1)}ies`
+  return `${name}s`
+}
 
 // ---------------------------------------------------------------------------
 // TypeScript interface builder
@@ -169,6 +183,7 @@ const ATTR_TYPE_MAP: Record<string, string> = {
   date: 'Date',
   object: 'Record<string, unknown>',
   array: 'unknown[]',
+  enum: 'string',
 }
 
 function buildTsInterface(name: string, attrs: ReadAttribute[]): string {
@@ -197,7 +212,8 @@ const KNOWN_EXAMPLES: Record<string, { js: string; raw: unknown }> = {
 
 function exampleFilterValue(filter: Filter): { js: string; raw: string } {
   if (filter.values?.length) {
-    const v = String(filter.values[0].value ?? filter.values[0])
+    const first = filter.values[0]
+    const v = String(typeof first === 'object' ? first.value : first)
     return { js: `'${v}'`, raw: v }
   }
   if (filter.type === 'number') return { js: '1', raw: '1' }
@@ -206,13 +222,22 @@ function exampleFilterValue(filter: Filter): { js: string; raw: string } {
 }
 
 function exampleAttrValue(attr: CreateAttribute): { js: string; raw: unknown } {
-  if (attr.values?.length) return { js: `'${attr.values[0]}'`, raw: attr.values[0] }
+  if (attr.values?.length) {
+    const v = attr.values[0]
+    return typeof v === 'number'
+      ? { js: String(v), raw: v }
+      : { js: `'${v}'`, raw: v }
+  }
   if (attr.type === 'number') {
     const val = attr.key.toLowerCase().includes('id') ? 1 : 0
     return { js: String(val), raw: val }
   }
   if (attr.type === 'boolean') return { js: 'true', raw: true }
-  if (attr.type === 'array') return { js: '[1, 2]', raw: [1, 2] }
+  if (attr.type === 'object') return { js: '{}', raw: {} }
+  if (attr.type === 'array') {
+    if (attr.itemType === 'object') return { js: '[]', raw: [] }
+    return { js: '[1, 2]', raw: [1, 2] }
+  }
   return KNOWN_EXAMPLES[attr.key] ?? { js: "'example'", raw: 'example' }
 }
 
@@ -226,8 +251,10 @@ function buildFilterRows(filters?: Record<string, Filter>): string[][] {
     const param = filter.required
       ? `\`filter[${name}]\` *`
       : `\`filter[${name}]\``
-    const values = filter.values
-      ? filter.values.map((v) => `\`${v.value ?? v}\``).join(', ')
+    const values = filter.values?.length
+      ? filter.values
+          .map((v) => `\`${typeof v === 'object' ? v.value : v}\``)
+          .join(', ')
       : filter.type
     const defaultVal = Array.isArray(filter.default)
       ? filter.default.map((v) => `\`${v}\``).join(', ')
@@ -248,20 +275,25 @@ function buildIncludeRows(includes?: string[]): string[][] {
   return [['`include`', '', includes.map((i) => `\`${i}\``).join(', ')]]
 }
 
-function buildCreateRows(attributes: CreateAttribute[]): string[][] {
+function attrTypeLabel(attr: CreateAttribute): string {
+  if (attr.type === 'array' && attr.itemType) {
+    return `array of ${attr.itemType}s`
+  }
+  return attr.type
+}
+
+function buildAttributeRows(attributes: CreateAttribute[]): string[][] {
   return attributes.map((attr) => {
     const name = attr.required ? `\`${attr.key}\` *` : `\`${attr.key}\``
-    const type = attr.multiple ? `array of ${attr.type}s` : attr.type
     let desc = ''
-    if (attr.values) {
-      desc = (Array.isArray(attr.values) ? attr.values : [])
-        .map((v) => `\`${v}\``)
-        .join(', ')
+    if (attr.values?.length) {
+      desc = attr.values.map((v) => `\`${v}\``).join(', ')
     }
-    if (attr.helpText) {
-      desc = desc ? `${desc}. ${attr.helpText}` : attr.helpText
+    const text = attr.description ?? attr.helpText
+    if (text) {
+      desc = desc ? `${desc}. ${text}` : text
     }
-    return [name, escapeCell(type), escapeCell(desc)]
+    return [name, escapeCell(attrTypeLabel(attr)), escapeCell(desc)]
   })
 }
 
@@ -284,12 +316,23 @@ function sdkSnippet(parts: {
   ].join('\n')
 }
 
+function pickExampleAttrs(attrs: CreateAttribute[]): CreateAttribute[] {
+  const display = attrs.filter(
+    (a) =>
+      a.required ||
+      ['firstName', 'lastName', 'email', 'phone', 'comment', 'name', 'title'].includes(
+        a.key,
+      ),
+  )
+  return display.length > 0 ? display : attrs.slice(0, 4)
+}
+
 // ---------------------------------------------------------------------------
 // Page generators
 // ---------------------------------------------------------------------------
 
-function generateListPage(key: string, model: Model): string {
-  const name = humanize(key)
+function generateListPage(model: Model): string {
+  const name = model.name
   const paramRows = [
     ...buildFilterRows(model.filters),
     ...buildPaginationRows(),
@@ -310,24 +353,24 @@ function generateListPage(key: string, model: Model): string {
 
   const sdk = sdkSnippet({
     endpoint: model.endpoint,
-    varName: `${key}s`,
+    varName: model.endpoint,
     method: 'findAll',
     args: filterArg,
   })
 
   const curl = [
-    `curl "https://api.confetti.events/${model.endpoint}${curlQuery}" \\`,
+    `curl "https://api.confetti.events/${model.path}${curlQuery}" \\`,
     '  -H "Authorization: apikey your-key"',
   ].join('\n')
 
   const readAttrs = model.operations?.read?.attributes ?? []
-  const tsInterface = buildTsInterface(capitalize(key), readAttrs)
+  const tsInterface = buildTsInterface(capitalize(model.key), readAttrs)
 
   return new MdBuilder()
     .frontmatter({ outline: 'deep' })
-    .heading(1, `List ${name}s`)
-    .component('ApiEndpoint', { method: 'GET', path: `/${model.endpoint}` })
-    .paragraph(`Retrieve a paginated list of ${name.toLowerCase()}s.`)
+    .heading(1, `List ${pluralize(name)}`)
+    .component('ApiEndpoint', { method: 'GET', path: `/${model.path}` })
+    .paragraph(`Retrieve a paginated list of ${pluralize(name).toLowerCase()}.`)
     .heading(2, 'Parameters')
     .table(['Parameter', 'Default', 'Values / Description'], paramRows)
     .blockquote('Fields marked with **\\*** are required.')
@@ -345,31 +388,31 @@ function generateListPage(key: string, model: Model): string {
     .build()
 }
 
-function generateGetPage(key: string, model: Model): string {
-  const name = humanize(key)
+function generateGetPage(model: Model): string {
+  const name = model.name
   const includeRows = buildIncludeRows(model.includes)
   const sampleId =
     (model.sample.single.formatted as Record<string, unknown>).id ?? '2'
 
   const sdk = sdkSnippet({
     endpoint: model.endpoint,
-    varName: key,
+    varName: model.key,
     method: 'find',
     args: String(sampleId),
   })
 
   const curl = [
-    `curl "https://api.confetti.events/${model.endpoint}/${sampleId}" \\`,
+    `curl "https://api.confetti.events/${model.path}/${sampleId}" \\`,
     '  -H "Authorization: apikey your-key"',
   ].join('\n')
 
   const readAttrs = model.operations?.read?.attributes ?? []
-  const tsInterface = buildTsInterface(capitalize(key), readAttrs)
+  const tsInterface = buildTsInterface(capitalize(model.key), readAttrs)
 
   const md = new MdBuilder()
     .frontmatter({ outline: 'deep' })
     .heading(1, `Get ${name}`)
-    .component('ApiEndpoint', { method: 'GET', path: `/${model.endpoint}/:id` })
+    .component('ApiEndpoint', { method: 'GET', path: `/${model.path}/:id` })
     .paragraph(`Retrieve a single ${name.toLowerCase()} by its ID.`)
 
   if (includeRows.length > 0) {
@@ -392,16 +435,12 @@ function generateGetPage(key: string, model: Model): string {
     .build()
 }
 
-function generateCreatePage(key: string, model: Model): string {
-  const name = humanize(key)
+function generateCreatePage(model: Model): string {
+  const name = model.name
   const attrs = model.operations?.create?.attributes ?? []
-  const attrRows = buildCreateRows(attrs)
+  const attrRows = buildAttributeRows(attrs)
 
-  const displayAttrs = attrs.filter(
-    (a) =>
-      a.required ||
-      ['firstName', 'lastName', 'email', 'phone', 'comment'].includes(a.key),
-  )
+  const displayAttrs = pickExampleAttrs(attrs)
 
   const jsFields = displayAttrs
     .map((a) => `  ${a.key}: ${exampleAttrValue(a).js},`)
@@ -409,7 +448,7 @@ function generateCreatePage(key: string, model: Model): string {
 
   const sdk = sdkSnippet({
     endpoint: model.endpoint,
-    varName: key,
+    varName: model.key,
     method: 'create',
     args: `{\n${jsFields}\n}`,
   })
@@ -420,10 +459,10 @@ function generateCreatePage(key: string, model: Model): string {
       .map((a) => [a.key, exampleAttrValue(a).raw]),
   )
 
-  const curlBody = json({ data: { type: key, attributes: curlAttrs } })
+  const curlBody = json({ data: { type: model.key, attributes: curlAttrs } })
 
   const curl = [
-    `curl -X POST "https://api.confetti.events/${model.endpoint}" \\`,
+    `curl -X POST "https://api.confetti.events/${model.path}" \\`,
     '  -H "Content-Type: application/json" \\',
     '  -H "Authorization: apikey your-key" \\',
     `  -d '${curlBody}'`,
@@ -432,8 +471,64 @@ function generateCreatePage(key: string, model: Model): string {
   return new MdBuilder()
     .frontmatter({ outline: 'deep' })
     .heading(1, `Create ${name}`)
-    .component('ApiEndpoint', { method: 'POST', path: `/${model.endpoint}` })
+    .component('ApiEndpoint', { method: 'POST', path: `/${model.path}` })
     .paragraph(`Create a new ${name.toLowerCase()}.`)
+    .heading(2, 'Attributes')
+    .table(['Attribute', 'Type', 'Description'], attrRows)
+    .blockquote('Fields marked with **\\*** are required.')
+    .heading(2, 'Request')
+    .codeGroup([
+      { label: 'JavaScript', lang: 'js', code: sdk },
+      { label: 'cURL', lang: 'sh', code: curl },
+    ])
+    .build()
+}
+
+function generateUpdatePage(model: Model): string {
+  const name = model.name
+  const attrs = model.operations?.update?.attributes ?? []
+  const attrRows = buildAttributeRows(attrs)
+
+  const sampleId =
+    (model.sample.single.formatted as Record<string, unknown>).id ?? '2'
+
+  const displayAttrs = pickExampleAttrs(attrs)
+
+  const jsFields = displayAttrs
+    .map((a) => `  ${a.key}: ${exampleAttrValue(a).js},`)
+    .join('\n')
+
+  const sdk = sdkSnippet({
+    endpoint: model.endpoint,
+    varName: model.key,
+    method: 'update',
+    args: `${sampleId}, {\n${jsFields}\n}`,
+  })
+
+  const curlAttrs = Object.fromEntries(
+    displayAttrs
+      .filter((a) => !a.key.toLowerCase().includes('id') || a.key === 'eventId')
+      .map((a) => [a.key, exampleAttrValue(a).raw]),
+  )
+
+  const curlBody = json({
+    data: { type: model.key, id: String(sampleId), attributes: curlAttrs },
+  })
+
+  const curl = [
+    `curl -X PATCH "https://api.confetti.events/${model.path}/${sampleId}" \\`,
+    '  -H "Content-Type: application/json" \\',
+    '  -H "Authorization: apikey your-key" \\',
+    `  -d '${curlBody}'`,
+  ].join('\n')
+
+  return new MdBuilder()
+    .frontmatter({ outline: 'deep' })
+    .heading(1, `Update ${name}`)
+    .component('ApiEndpoint', { method: 'PATCH', path: `/${model.path}/:id` })
+    .paragraph(
+      `Update an existing ${name.toLowerCase()}. Only the attributes you include are changed.`,
+    )
     .heading(2, 'Attributes')
     .table(['Attribute', 'Type', 'Description'], attrRows)
     .blockquote('Fields marked with **\\*** are required.')
@@ -450,14 +545,21 @@ function generateCreatePage(key: string, model: Model): string {
 // ---------------------------------------------------------------------------
 
 async function generateChangelog(): Promise<void> {
+  const localPath = join(ROOT, 'node_modules/confetti/CHANGELOG.md')
   let md: string
-  try {
-    const res = await fetch(CHANGELOG_URL)
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    md = await res.text()
-  } catch (err) {
-    console.warn(`Could not fetch changelog: ${err}`)
-    return
+  if (existsSync(localPath)) {
+    md = readFileSync(localPath, 'utf8')
+    console.log('Using local changelog from linked confetti package')
+  } else {
+    try {
+      const res = await fetch(CHANGELOG_URL)
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      md = await res.text()
+      console.log('Generated changelog from GitHub')
+    } catch (err) {
+      console.warn(`Could not fetch changelog: ${err}`)
+      return
+    }
   }
 
   const normalized = md.replace(/^# /gm, '## ')
@@ -472,7 +574,6 @@ async function generateChangelog(): Promise<void> {
     .build()
 
   writeFileSync(join(DOCS_DIR, 'changelog.md'), page)
-  console.log('Generated changelog from GitHub')
 }
 
 // ---------------------------------------------------------------------------
@@ -480,28 +581,45 @@ async function generateChangelog(): Promise<void> {
 // ---------------------------------------------------------------------------
 
 const resources: ResourceConfig[] = [
-  { key: 'event', ops: ['list', 'get'] },
-  { key: 'ticket', ops: ['list', 'get', 'create'] },
+  { key: 'event', ops: ['list', 'get', 'create', 'update'] },
+  { key: 'page', ops: ['list', 'get', 'create', 'update'] },
+  { key: 'block', ops: ['list', 'get', 'create', 'update'] },
+  { key: 'image', ops: ['list', 'get', 'create', 'update'] },
+  { key: 'ticketBatch', ops: ['list', 'get'] },
+  { key: 'ticket', ops: ['list', 'get', 'create', 'update'] },
   { key: 'contact', ops: ['list', 'get', 'create'] },
   { key: 'payment', ops: ['list', 'get'] },
-  { key: 'webhook', ops: ['list', 'get'] },
-  { key: 'workspace', ops: ['get'] },
+  { key: 'form', ops: ['get'] },
+  { key: 'formField', ops: ['get', 'create', 'update'] },
+  { key: 'scheduleItem', ops: ['get', 'create', 'update'] },
+  { key: 'speaker', ops: ['get', 'create', 'update'] },
+  { key: 'organiser', ops: ['get', 'create', 'update'] },
+  { key: 'sponsor', ops: ['get', 'create', 'update'] },
+  { key: 'sponsorLevel', ops: ['get', 'create', 'update'] },
+  { key: 'category', ops: ['list', 'get'] },
+  { key: 'webhook', ops: ['list', 'get', 'create'] },
+  { key: 'workspace', dir: 'workspace', ops: ['get'] },
 ]
 
-const generators: Record<string, (key: string, model: Model) => string> = {
+const generators: Record<Op, (model: Model) => string> = {
   list: generateListPage,
   get: generateGetPage,
   create: generateCreatePage,
+  update: generateUpdatePage,
 }
 
-for (const { key, ops } of resources) {
-  const dir = join(DOCS_DIR, key === 'workspace' ? 'workspace' : `${key}s`)
-  mkdirSync(dir, { recursive: true })
+for (const { key, dir, ops } of resources) {
+  const model = confetti.models[key]
+  if (!model) {
+    console.warn(`Model not found: ${key}`)
+    continue
+  }
 
-  const model = confetti.models[key] as Model
+  const resourceDir = join(DOCS_DIR, dir ?? model.path)
+  mkdirSync(resourceDir, { recursive: true })
 
   for (const op of ops) {
-    writeFileSync(join(dir, `${op}.md`), generators[op](key, model))
+    writeFileSync(join(resourceDir, `${op}.md`), generators[op](model))
   }
 }
 

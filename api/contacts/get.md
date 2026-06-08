@@ -64,11 +64,7 @@ interface Contact {
   "createdAt": "2022-01-05T15:33:13.171Z",
   "updatedAt": "2022-01-05T15:33:13.171Z",
   "organisationId": 57,
-  "company": "Company AB",
-  "type": "contact",
-  "meta": {
-    "webhookType": "contact.created"
-  }
+  "company": "Company AB"
 }
 ```
 

@@ -10,9 +10,9 @@ Retrieve a single event by its ID.
 
 ## Parameters
 
-| Parameter | Default | Values / Description                                                                                                                           |
-| --------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `include` |         | `categories`, `pages`, `pages.blocks`, `pages.blocks.images`, `schedule-items`, `speakers`, `speakers.image`, `organisers`, `organisers.image` |
+| Parameter | Default | Values / Description                                                                                                                                                |
+| --------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `include` |         | `categories`, `pages`, `pages.blocks`, `pages.blocks.images`, `schedule-items`, `speakers`, `speakers.image`, `organisers`, `organisers.image`, `forms.form-fields` |
 
 ## Request
 
@@ -66,10 +66,22 @@ interface Event {
   locale: string
   primaryColor: string
   contrastColor: string
+  signupColor: string
+  textColor: string
+  secondaryContrastColor: string
+  hasAdvancedColors: boolean
+  fontNormal: string
+  fontNormalCategory: string
+  fontNormalVariant: string
+  fontHeading: string
+  fontHeadingCategory: string
+  fontHeadingVariant: string
+  buttonBorderRadius: number
+  customCss: string
   waitlist: string
   enableExtraGuests: boolean
   maxExtraGuests: number
-  location: string
+  location: Record<string, unknown>
 }
 ```
 
@@ -101,11 +113,7 @@ interface Event {
     "url": "http://www.google.com/maps?q=undefined"
   },
   "id": "16500",
-  "type": "event",
-  "images": null,
-  "meta": {
-    "webhookType": "event.updated"
-  }
+  "images": null
 }
 ```
 

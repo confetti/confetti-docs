@@ -10,13 +10,13 @@ Retrieve a paginated list of events.
 
 ## Parameters
 
-| Parameter            | Default | Values / Description                                                                                                                           |
-| -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `filter[signupType]` |         | `rsvp`, `tickets`                                                                                                                              |
-| `filter[type]`       |         | `future`, `past`                                                                                                                               |
-| `page[size]`         | `50`    | Maximum number of results per page                                                                                                             |
-| `page[number]`       | `1`     | Page number                                                                                                                                    |
-| `include`            |         | `categories`, `pages`, `pages.blocks`, `pages.blocks.images`, `schedule-items`, `speakers`, `speakers.image`, `organisers`, `organisers.image` |
+| Parameter            | Default | Values / Description                                                                                                                                                |
+| -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `filter[signupType]` |         | `rsvp`, `tickets`                                                                                                                                                   |
+| `filter[type]`       |         | `future`, `past`                                                                                                                                                    |
+| `page[size]`         | `50`    | Maximum number of results per page                                                                                                                                  |
+| `page[number]`       | `1`     | Page number                                                                                                                                                         |
+| `include`            |         | `categories`, `pages`, `pages.blocks`, `pages.blocks.images`, `schedule-items`, `speakers`, `speakers.image`, `organisers`, `organisers.image`, `forms.form-fields` |
 
 > Fields marked with **\*** are required.
 
@@ -75,10 +75,22 @@ interface Event {
   locale: string
   primaryColor: string
   contrastColor: string
+  signupColor: string
+  textColor: string
+  secondaryContrastColor: string
+  hasAdvancedColors: boolean
+  fontNormal: string
+  fontNormalCategory: string
+  fontNormalVariant: string
+  fontHeading: string
+  fontHeadingCategory: string
+  fontHeadingVariant: string
+  buttonBorderRadius: number
+  customCss: string
   waitlist: string
   enableExtraGuests: boolean
   maxExtraGuests: number
-  location: string
+  location: Record<string, unknown>
 }
 ```
 
@@ -111,7 +123,6 @@ interface Event {
       "url": "http://www.google.com/maps?q=undefined"
     },
     "id": "16500",
-    "type": "event",
     "images": null
   },
   {
@@ -141,7 +152,6 @@ interface Event {
       "url": "http://www.google.com/maps?q=undefined"
     },
     "id": "16500",
-    "type": "event",
     "images": null
   }
 ]

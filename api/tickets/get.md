@@ -10,9 +10,9 @@ Retrieve a single ticket by its ID.
 
 ## Parameters
 
-| Parameter | Default | Values / Description |
-| --------- | ------- | -------------------- |
-| `include` |         | `addons`             |
+| Parameter | Default | Values / Description                                        |
+| --------- | ------- | ----------------------------------------------------------- |
+| `include` |         | `addons`, `formattedValues`, `parentTicket`, `guestTickets` |
 
 ## Request
 
@@ -58,7 +58,7 @@ interface Ticket {
   waitlistAt: Date
   startDate: Date
   endDate: Date
-  values: string
+  values: Record<string, unknown>
   comment: string
   guests: number
   termsAcceptedAt: Date
@@ -69,6 +69,7 @@ interface Ticket {
   paymentId: number
   eventId: number
   contactId: number
+  formattedValues: unknown[]
 }
 ```
 
@@ -108,11 +109,7 @@ interface Ticket {
   "paymentId": 288297,
   "eventId": 16969,
   "contactId": 112395,
-  "id": "3344691",
-  "type": "ticket",
-  "meta": {
-    "webhookType": "ticket.attending"
-  }
+  "id": "3344691"
 }
 ```
 

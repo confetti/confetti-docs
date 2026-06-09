@@ -23,6 +23,7 @@ Create a new ticket.
 | `comment`                 | string           | Internal note visible only to workspace teammates. Not shown to attendees.                                                                                                                        |
 | `values`                  | object           | Raw form field answers keyed by field name (e.g. {"dietary-needs": "Vegan"}). Agents using MCP should prefer passing formValues, which resolves field titles or IDs to field names automatically. |
 | `sendEmailConfirmation` * | boolean          | If set to true, an email confirmation will be sent to the attendee / invitee.                                                                                                                     |
+| `guests`                  | number           | Number of additional guests attached to this ticket (e.g. 3 for "John +3"). Use this when you only need a guest count; use guestTickets when you need per-guest details.                          |
 | `guestTickets`            | array of objects | Guests attached to this ticket, as an array of guest people. Each guest becomes a child ticket. Requires the event to have guest info enabled.                                                    |
 
 > Fields marked with **\*** are required.

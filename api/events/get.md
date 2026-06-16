@@ -50,6 +50,9 @@ interface Event {
   signupType: string
   signupStartAt: Date
   signupEndAt: Date
+  privacyVisibility: string
+  privacyAttendability: string
+  privacyPassword: string
   website: string
   email: string
   rsvpLimit: number
@@ -95,6 +98,8 @@ interface Event {
   "status": "open",
   "featureLevel": "business",
   "signupType": "rsvp",
+  "privacyVisibility": "everyone",
+  "privacyAttendability": "invite",
   "website": "http://jonny-action.confetti.test/my-first-event",
   "email": "jonny.stromberg@gmail.com",
   "rsvpLimit": 100,
@@ -131,6 +136,8 @@ interface Event {
       "status": "open",
       "featureLevel": "business",
       "signupType": "rsvp",
+      "privacyVisibility": "everyone",
+      "privacyAttendability": "invite",
       "website": "http://jonny-action.confetti.test/my-first-event",
       "email": "jonny.stromberg@gmail.com",
       "rsvpLimit": 100,

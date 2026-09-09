@@ -10,17 +10,17 @@ Update an existing speaker. Only the attributes you include are changed.
 
 ## Attributes
 
-| Attribute    | Type   | Description |
-| ------------ | ------ | ----------- |
-| `firstName`  | string |             |
-| `eventId`    | number |             |
-| `lastName`   | string |             |
-| `order`      | string |             |
-| `occupation` | string |             |
-| `bio`        | string |             |
-| `status`     | string |             |
-| `settings`   | string |             |
-| `imageId`    | string |             |
+| Attribute    | Type   | Description           |
+| ------------ | ------ | --------------------- |
+| `firstName`  | string |                       |
+| `eventId`    | number |                       |
+| `lastName`   | string |                       |
+| `order`      | number |                       |
+| `occupation` | string |                       |
+| `bio`        | string |                       |
+| `status`     | enum   | `announced`, `hidden` |
+| `settings`   | object |                       |
+| `imageId`    | number |                       |
 
 > All attributes are optional.
 

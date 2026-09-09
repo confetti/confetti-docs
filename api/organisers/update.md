@@ -19,9 +19,9 @@ Update an existing organiser. Only the attributes you include are changed.
 | `twitter`     | string |             |
 | `instagram`   | string |             |
 | `url`         | string |             |
-| `order`       | string |             |
-| `settings`    | string |             |
-| `imageId`     | string |             |
+| `order`       | number |             |
+| `settings`    | object |             |
+| `imageId`     | number |             |
 
 > All attributes are optional.
 

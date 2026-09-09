@@ -19,7 +19,7 @@ Create a new form field.
 | `order`       | number | Display order within the form.                                                                                                                     |
 | `settings`    | object |                                                                                                                                                    |
 | `formId` *    | number | Form this field belongs to.                                                                                                                        |
-| `sectionId`   | string | Parent section field ID, if nested.                                                                                                                |
+| `sectionId`   | number | Parent section field ID, if nested.                                                                                                                |
 
 > Fields marked with **\*** are required.
 

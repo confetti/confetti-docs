@@ -14,11 +14,11 @@ Update an existing schedule item. Only the attributes you include are changed.
 | ------------- | ------ | ----------- |
 | `title`       | string |             |
 | `eventId`     | number |             |
-| `start`       | string |             |
+| `start`       | date   |             |
 | `location`    | string |             |
 | `description` | string |             |
-| `duration`    | string |             |
-| `settings`    | string |             |
+| `duration`    | number |             |
+| `settings`    | object |             |
 
 > All attributes are optional.
 

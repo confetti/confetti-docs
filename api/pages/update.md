@@ -10,16 +10,16 @@ Update an existing page. Only the attributes you include are changed.
 
 ## Attributes
 
-| Attribute       | Type   | Description |
-| --------------- | ------ | ----------- |
-| `name`          | string |             |
-| `slug`          | string |             |
-| `status`        | string |             |
-| `order`         | string |             |
-| `settings`      | string |             |
-| `prefillBlocks` | string |             |
-| `eventId`       | string |             |
-| `workspaceId`   | string |             |
+| Attribute       | Type    | Description |
+| --------------- | ------- | ----------- |
+| `name`          | string  |             |
+| `slug`          | string  |             |
+| `status`        | string  |             |
+| `order`         | number  |             |
+| `settings`      | object  |             |
+| `prefillBlocks` | boolean |             |
+| `eventId`       | number  |             |
+| `workspaceId`   | number  |             |
 
 > All attributes are optional.
 

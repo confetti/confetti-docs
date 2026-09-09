@@ -16,8 +16,8 @@ Update an existing sponsor. Only the attributes you include are changed.
 | `sponsorLevelId` | number |             |
 | `description`    | string |             |
 | `website`        | string |             |
-| `order`          | string |             |
-| `imageId`        | string |             |
+| `order`          | number |             |
+| `imageId`        | number |             |
 
 > All attributes are optional.
 

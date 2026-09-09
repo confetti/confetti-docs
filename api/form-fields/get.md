@@ -40,7 +40,7 @@ interface FormField {
   field: string
   order: number
   status: string
-  sectionId: string
+  sectionId: number
   settings: Record<string, unknown>
 }
 ```

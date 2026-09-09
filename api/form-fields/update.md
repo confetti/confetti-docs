@@ -13,12 +13,12 @@ Update an existing form field. Only the attributes you include are changed.
 | Attribute     | Type   | Description                                                                                                                         |
 | ------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `title`       | string | Human-readable field label.                                                                                                         |
-| `description` | string | Optional help text for the field.                                                                                                   |
+| `description` | string |                                                                                                                                     |
 | `field`       | enum   | `text`, `textarea`, `radio`, `checkbox`, `select`, `country`, `rating`, `section`, `company`, `title`. The input type of the field. |
-| `order`       | string | Display order within the form.                                                                                                      |
-| `settings`    | string |                                                                                                                                     |
+| `order`       | number |                                                                                                                                     |
+| `settings`    | object |                                                                                                                                     |
 | `formId`      | number | Form this field belongs to.                                                                                                         |
-| `sectionId`   | string | Parent section field ID, if nested.                                                                                                 |
+| `sectionId`   | number |                                                                                                                                     |
 | `status`      | enum   | `created`, `locked`                                                                                                                 |
 
 > All attributes are optional.

@@ -10,12 +10,12 @@ Update an existing sponsor level. Only the attributes you include are changed.
 
 ## Attributes
 
-| Attribute | Type   | Description |
-| --------- | ------ | ----------- |
-| `name`    | string |             |
-| `eventId` | number |             |
-| `style`   | string |             |
-| `order`   | string |             |
+| Attribute | Type   | Description                |
+| --------- | ------ | -------------------------- |
+| `name`    | string |                            |
+| `eventId` | number |                            |
+| `style`   | enum   | `large`, `medium`, `small` |
+| `order`   | number |                            |
 
 > All attributes are optional.
 

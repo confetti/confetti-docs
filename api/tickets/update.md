@@ -20,9 +20,9 @@ Update an existing ticket. Only the attributes you include are changed.
 | `company`               | string  |                                                                                                                        |
 | `comment`               | string  | Internal note visible only to workspace teammates. Not shown to attendees.                                             |
 | `guests`                | number  |                                                                                                                        |
-| `values`                | object  |                                                                                                                        |
+| `values`                | object  | Passing null clears every stored form answer.                                                                          |
 | `checkinAt`             | string  |                                                                                                                        |
-| `ticketBatchId`         | number  |                                                                                                                        |
+| `ticketBatchId`         | number  | Moves the ticket to another batch. Passing null leaves the current batch unchanged.                                    |
 | `sendEmailConfirmation` | boolean | If set to true, an email confirmation will be sent to the attendee.                                                    |
 
 > All attributes are optional.

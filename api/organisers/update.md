@@ -4,7 +4,7 @@ outline: deep
 
 # Update Organiser
 
-<ApiEndpoint method="PATCH" path="/organisers/:id" />
+<ApiEndpoint method="PUT" path="/organisers/:id" />
 
 Update an existing organiser. Only the attributes you include are changed.
 
@@ -19,11 +19,11 @@ Update an existing organiser. Only the attributes you include are changed.
 | `twitter`     | string |             |
 | `instagram`   | string |             |
 | `url`         | string |             |
-| `order`       | string |             |
-| `settings`    | string |             |
-| `imageId`     | string |             |
+| `order`       | number |             |
+| `settings`    | object |             |
+| `imageId`     | number |             |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -41,7 +41,7 @@ const organiser = await confetti.organisers.update(112, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/organisers/112" \
+curl -X PUT "https://api.confetti.events/organisers/112" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

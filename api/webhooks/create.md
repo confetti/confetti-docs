@@ -17,7 +17,7 @@ Create a new webhook.
 | `provider`    | string |                      |
 | `status`      | enum   | `active`, `inactive` |
 | `workspaceId` | number |                      |
-| `eventId`     | string |                      |
+| `eventId`     | number |                      |
 
 > Fields marked with **\*** are required.
 

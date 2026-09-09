@@ -4,33 +4,33 @@ outline: deep
 
 # Update Image
 
-<ApiEndpoint method="PATCH" path="/images/:id" />
+<ApiEndpoint method="PUT" path="/images/:id" />
 
 Update an existing image. Only the attributes you include are changed.
 
 ## Attributes
 
-| Attribute      | Type   | Description                  |
-| -------------- | ------ | ---------------------------- |
-| `type`         | string |                              |
-| `provider`     | string | Image provider, e.g. "s3".   |
-| `public_id`    | string | Provider-specific image key. |
-| `url`          | string |                              |
-| `base64`       | string |                              |
-| `description`  | string |                              |
-| `title`        | string |                              |
-| `link`         | string |                              |
-| `order`        | string |                              |
-| `width`        | string |                              |
-| `height`       | string |                              |
-| `content`      | string |                              |
-| `blockId`      | string |                              |
-| `blockStyleId` | string |                              |
-| `themeId`      | string |                              |
-| `eventId`      | string |                              |
-| `workspaceId`  | string |                              |
+| Attribute      | Type   | Description |
+| -------------- | ------ | ----------- |
+| `type`         | string |             |
+| `provider`     | string |             |
+| `public_id`    | string |             |
+| `url`          | string |             |
+| `base64`       | string |             |
+| `description`  | string |             |
+| `title`        | string |             |
+| `link`         | string |             |
+| `order`        | number |             |
+| `width`        | number |             |
+| `height`       | number |             |
+| `content`      | object |             |
+| `blockId`      | number |             |
+| `blockStyleId` | number |             |
+| `themeId`      | number |             |
+| `eventId`      | number |             |
+| `workspaceId`  | number |             |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -47,7 +47,7 @@ const image = await confetti.images.update(4242, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/images/4242" \
+curl -X PUT "https://api.confetti.events/images/4242" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

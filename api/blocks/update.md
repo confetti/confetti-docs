@@ -4,7 +4,7 @@ outline: deep
 
 # Update Block
 
-<ApiEndpoint method="PATCH" path="/blocks/:id" />
+<ApiEndpoint method="PUT" path="/blocks/:id" />
 
 Update an existing block. Only the attributes you include are changed.
 
@@ -23,7 +23,7 @@ Update an existing block. Only the attributes you include are changed.
 | `workspaceId`  | number           |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | `categoryIds`  | array of numbers |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -43,7 +43,7 @@ const block = await confetti.blocks.update(210645, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/blocks/210645" \
+curl -X PUT "https://api.confetti.events/blocks/210645" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

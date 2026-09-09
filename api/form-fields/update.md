@@ -4,7 +4,7 @@ outline: deep
 
 # Update Form Field
 
-<ApiEndpoint method="PATCH" path="/form-fields/:id" />
+<ApiEndpoint method="PUT" path="/form-fields/:id" />
 
 Update an existing form field. Only the attributes you include are changed.
 
@@ -13,15 +13,15 @@ Update an existing form field. Only the attributes you include are changed.
 | Attribute     | Type   | Description                                                                                                                         |
 | ------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `title`       | string | Human-readable field label.                                                                                                         |
-| `description` | string | Optional help text for the field.                                                                                                   |
+| `description` | string |                                                                                                                                     |
 | `field`       | enum   | `text`, `textarea`, `radio`, `checkbox`, `select`, `country`, `rating`, `section`, `company`, `title`. The input type of the field. |
-| `order`       | string | Display order within the form.                                                                                                      |
-| `settings`    | string |                                                                                                                                     |
+| `order`       | number |                                                                                                                                     |
+| `settings`    | object |                                                                                                                                     |
 | `formId`      | number | Form this field belongs to.                                                                                                         |
-| `sectionId`   | string | Parent section field ID, if nested.                                                                                                 |
+| `sectionId`   | number |                                                                                                                                     |
 | `status`      | enum   | `created`, `locked`                                                                                                                 |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -38,7 +38,7 @@ const formField = await confetti.formFields.update(1, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/form-fields/1" \
+curl -X PUT "https://api.confetti.events/form-fields/1" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

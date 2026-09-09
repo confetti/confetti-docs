@@ -4,25 +4,25 @@ outline: deep
 
 # Update Speaker
 
-<ApiEndpoint method="PATCH" path="/speakers/:id" />
+<ApiEndpoint method="PUT" path="/speakers/:id" />
 
 Update an existing speaker. Only the attributes you include are changed.
 
 ## Attributes
 
-| Attribute    | Type   | Description |
-| ------------ | ------ | ----------- |
-| `firstName`  | string |             |
-| `eventId`    | number |             |
-| `lastName`   | string |             |
-| `order`      | string |             |
-| `occupation` | string |             |
-| `bio`        | string |             |
-| `status`     | string |             |
-| `settings`   | string |             |
-| `imageId`    | string |             |
+| Attribute    | Type   | Description           |
+| ------------ | ------ | --------------------- |
+| `firstName`  | string |                       |
+| `eventId`    | number |                       |
+| `lastName`   | string |                       |
+| `order`      | number |                       |
+| `occupation` | string |                       |
+| `bio`        | string |                       |
+| `status`     | enum   | `announced`, `hidden` |
+| `settings`   | object |                       |
+| `imageId`    | number |                       |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -40,7 +40,7 @@ const speaker = await confetti.speakers.update(107634, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/speakers/107634" \
+curl -X PUT "https://api.confetti.events/speakers/107634" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

@@ -4,24 +4,24 @@ outline: deep
 
 # Update Page
 
-<ApiEndpoint method="PATCH" path="/pages/:id" />
+<ApiEndpoint method="PUT" path="/pages/:id" />
 
 Update an existing page. Only the attributes you include are changed.
 
 ## Attributes
 
-| Attribute       | Type   | Description |
-| --------------- | ------ | ----------- |
-| `name`          | string |             |
-| `slug`          | string |             |
-| `status`        | string |             |
-| `order`         | string |             |
-| `settings`      | string |             |
-| `prefillBlocks` | string |             |
-| `eventId`       | string |             |
-| `workspaceId`   | string |             |
+| Attribute       | Type    | Description |
+| --------------- | ------- | ----------- |
+| `name`          | string  |             |
+| `slug`          | string  |             |
+| `status`        | string  |             |
+| `order`         | number  |             |
+| `settings`      | object  |             |
+| `prefillBlocks` | boolean |             |
+| `eventId`       | number  |             |
+| `workspaceId`   | number  |             |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -38,7 +38,7 @@ const page = await confetti.pages.update(26074, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/pages/26074" \
+curl -X PUT "https://api.confetti.events/pages/26074" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

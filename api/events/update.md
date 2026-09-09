@@ -4,53 +4,53 @@ outline: deep
 
 # Update Event
 
-<ApiEndpoint method="PATCH" path="/events/:id" />
+<ApiEndpoint method="PUT" path="/events/:id" />
 
 Update an existing event. Only the attributes you include are changed.
 
 ## Attributes
 
-| Attribute                | Type   | Description                                                                                                                                                                                                                                                                                    |
-| ------------------------ | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`                   | string |                                                                                                                                                                                                                                                                                                |
-| `startDate`              | string |                                                                                                                                                                                                                                                                                                |
-| `endDate`                | string |                                                                                                                                                                                                                                                                                                |
-| `status`                 | string | `draft`, `open`, `cancelled`. Event lifecycle status. 'draft' = unpublished/private, 'open' = published and live, 'cancelled' = cancelled. To publish a draft event, set status to 'open'; to unpublish, set it back to 'draft'. Publishing requires the event owner's account to be verified. |
-| `signupType`             | string |                                                                                                                                                                                                                                                                                                |
-| `signupStartAt`          | string |                                                                                                                                                                                                                                                                                                |
-| `signupEndAt`            | string |                                                                                                                                                                                                                                                                                                |
-| `privacyVisibility`      | string | Who can view the event page. 'everyone' = public, 'invite' = only invited guests with a valid invite, 'password' = requires the event password.                                                                                                                                                |
-| `privacyAttendability`   | string | Who can register / RSVP for the event. 'everyone' = anyone, 'invite' = requires a valid invite, 'password' = requires the event password.                                                                                                                                                      |
-| `privacyPassword`        | string | Password required to view/attend when privacyVisibility or privacyAttendability is 'password'.                                                                                                                                                                                                 |
-| `rsvpLimit`              | string |                                                                                                                                                                                                                                                                                                |
-| `email`                  | string |                                                                                                                                                                                                                                                                                                |
-| `timeZone`               | string |                                                                                                                                                                                                                                                                                                |
-| `continuous`             | string |                                                                                                                                                                                                                                                                                                |
-| `slug`                   | string |                                                                                                                                                                                                                                                                                                |
-| `primaryColor`           | string | Main brand color (hex). Used for buttons, links, and accent elements. Must contrast against contrastColor (background).                                                                                                                                                                        |
-| `contrastColor`          | string | Background color (hex). Used for page backgrounds and button text. Must contrast against primaryColor.                                                                                                                                                                                         |
-| `signupColor`            | string | CTA/button color used on signup and payment forms (hex). Must contrast against white (#FFFFFF). Defaults to primaryColor.                                                                                                                                                                      |
-| `textColor`              | string | Default body text color (hex). Must contrast against contrastColor (background).                                                                                                                                                                                                               |
-| `secondaryContrastColor` | string | Secondary background color (hex). Used for alternate sections. Must contrast against primaryColor.                                                                                                                                                                                             |
-| `hasAdvancedColors`      | string | When false, only primaryColor is used and other colors are auto-derived. When true, all colors are set independently.                                                                                                                                                                          |
-| `fontNormal`             | string | Google Fonts font family for body text (e.g. "Inter").                                                                                                                                                                                                                                         |
-| `fontNormalCategory`     | string | CSS font category: sans-serif, serif, or monospace.                                                                                                                                                                                                                                            |
-| `fontNormalVariant`      | string | Font variant/weight (e.g. "400", "600").                                                                                                                                                                                                                                                       |
-| `fontHeading`            | string | Google Fonts font family for headings (e.g. "Playfair Display").                                                                                                                                                                                                                               |
-| `fontHeadingCategory`    | string | CSS font category: sans-serif, serif, or monospace.                                                                                                                                                                                                                                            |
-| `fontHeadingVariant`     | string | Font weight and style (e.g. "700", "600italic").                                                                                                                                                                                                                                               |
-| `buttonBorderRadius`     | string | Button corner radius in pixels (e.g. 4 for square, 35 for rounded).                                                                                                                                                                                                                            |
-| `customCss`              | string | Global CSS stylesheet applied to every page of the event. Use this to override default styles, customize layouts, hide elements, or add any custom styling. The CSS is injected into a &lt;style&gt; tag on all event pages. Combine with custom HTML blocks for full visual control.          |
-| `shareTitle`             | string |                                                                                                                                                                                                                                                                                                |
-| `shareDescription`       | string |                                                                                                                                                                                                                                                                                                |
-| `summary`                | string |                                                                                                                                                                                                                                                                                                |
-| `smsSenderName`          | string |                                                                                                                                                                                                                                                                                                |
-| `ticketsPerPurchase`     | string |                                                                                                                                                                                                                                                                                                |
-| `locationName`           | string |                                                                                                                                                                                                                                                                                                |
-| `locationPlace`          | string | Location/venue details. Both formatted_address and geometry.location (lat/lng) are needed for the map to render. Without coordinates the map image will be broken.                                                                                                                             |
-| `workspaceId`            | string |                                                                                                                                                                                                                                                                                                |
+| Attribute                | Type    | Description                      |
+| ------------------------ | ------- | -------------------------------- |
+| `name`                   | string  |                                  |
+| `startDate`              | string  |                                  |
+| `endDate`                | string  |                                  |
+| `status`                 | enum    | `draft`, `open`, `cancelled`     |
+| `signupType`             | enum    | `rsvp`, `tickets`                |
+| `signupStartAt`          | string  |                                  |
+| `signupEndAt`            | string  |                                  |
+| `privacyVisibility`      | enum    | `everyone`, `invite`, `password` |
+| `privacyAttendability`   | enum    | `everyone`, `invite`, `password` |
+| `privacyPassword`        | string  |                                  |
+| `rsvpLimit`              | number  |                                  |
+| `email`                  | string  |                                  |
+| `timeZone`               | string  |                                  |
+| `continuous`             | boolean |                                  |
+| `slug`                   | string  |                                  |
+| `primaryColor`           | string  |                                  |
+| `contrastColor`          | string  |                                  |
+| `signupColor`            | string  |                                  |
+| `textColor`              | string  |                                  |
+| `secondaryContrastColor` | string  |                                  |
+| `hasAdvancedColors`      | boolean |                                  |
+| `fontNormal`             | string  |                                  |
+| `fontNormalCategory`     | string  |                                  |
+| `fontNormalVariant`      | string  |                                  |
+| `fontHeading`            | string  |                                  |
+| `fontHeadingCategory`    | string  |                                  |
+| `fontHeadingVariant`     | string  |                                  |
+| `buttonBorderRadius`     | number  |                                  |
+| `customCss`              | string  |                                  |
+| `shareTitle`             | string  |                                  |
+| `shareDescription`       | string  |                                  |
+| `summary`                | string  |                                  |
+| `smsSenderName`          | string  |                                  |
+| `ticketsPerPurchase`     | number  |                                  |
+| `locationName`           | string  |                                  |
+| `locationPlace`          | object  |                                  |
+| `workspaceId`            | number  |                                  |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -68,7 +68,7 @@ const event = await confetti.events.update(16500, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/events/16500" \
+curl -X PUT "https://api.confetti.events/events/16500" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

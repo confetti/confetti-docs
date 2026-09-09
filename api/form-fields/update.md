@@ -4,7 +4,7 @@ outline: deep
 
 # Update Form Field
 
-<ApiEndpoint method="PATCH" path="/form-fields/:id" />
+<ApiEndpoint method="PUT" path="/form-fields/:id" />
 
 Update an existing form field. Only the attributes you include are changed.
 
@@ -21,7 +21,7 @@ Update an existing form field. Only the attributes you include are changed.
 | `sectionId`   | string | Parent section field ID, if nested.                                                                                                 |
 | `status`      | enum   | `created`, `locked`                                                                                                                 |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -38,7 +38,7 @@ const formField = await confetti.formFields.update(1, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/form-fields/1" \
+curl -X PUT "https://api.confetti.events/form-fields/1" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

@@ -4,7 +4,7 @@ outline: deep
 
 # Update Schedule Item
 
-<ApiEndpoint method="PATCH" path="/schedule-items/:id" />
+<ApiEndpoint method="PUT" path="/schedule-items/:id" />
 
 Update an existing schedule item. Only the attributes you include are changed.
 
@@ -20,7 +20,7 @@ Update an existing schedule item. Only the attributes you include are changed.
 | `duration`    | string |             |
 | `settings`    | string |             |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -37,7 +37,7 @@ const scheduleItem = await confetti.scheduleItems.update(173, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/schedule-items/173" \
+curl -X PUT "https://api.confetti.events/schedule-items/173" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

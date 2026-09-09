@@ -516,7 +516,7 @@ function generateUpdatePage(model: Model): string {
   })
 
   const curl = [
-    `curl -X PATCH "https://api.confetti.events/${model.path}/${sampleId}" \\`,
+    `curl -X PUT "https://api.confetti.events/${model.path}/${sampleId}" \\`,
     '  -H "Content-Type: application/json" \\',
     '  -H "Authorization: apikey your-key" \\',
     `  -d '${curlBody}'`,
@@ -525,13 +525,17 @@ function generateUpdatePage(model: Model): string {
   return new MdBuilder()
     .frontmatter({ outline: 'deep' })
     .heading(1, `Update ${name}`)
-    .component('ApiEndpoint', { method: 'PATCH', path: `/${model.path}/:id` })
+    .component('ApiEndpoint', { method: 'PUT', path: `/${model.path}/:id` })
     .paragraph(
       `Update an existing ${name.toLowerCase()}. Only the attributes you include are changed.`,
     )
     .heading(2, 'Attributes')
     .table(['Attribute', 'Type', 'Description'], attrRows)
-    .blockquote('Fields marked with **\\*** are required.')
+    .blockquote(
+      attrs.some((a) => a.required)
+        ? 'Fields marked with **\\*** are required.'
+        : 'All attributes are optional.',
+    )
     .heading(2, 'Request')
     .codeGroup([
       { label: 'JavaScript', lang: 'js', code: sdk },

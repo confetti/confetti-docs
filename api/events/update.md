@@ -4,7 +4,7 @@ outline: deep
 
 # Update Event
 
-<ApiEndpoint method="PATCH" path="/events/:id" />
+<ApiEndpoint method="PUT" path="/events/:id" />
 
 Update an existing event. Only the attributes you include are changed.
 
@@ -50,7 +50,7 @@ Update an existing event. Only the attributes you include are changed.
 | `locationPlace`          | string | Location/venue details. Both formatted_address and geometry.location (lat/lng) are needed for the map to render. Without coordinates the map image will be broken.                                                                                                                             |
 | `workspaceId`            | string |                                                                                                                                                                                                                                                                                                |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -68,7 +68,7 @@ const event = await confetti.events.update(16500, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/events/16500" \
+curl -X PUT "https://api.confetti.events/events/16500" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

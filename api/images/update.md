@@ -4,7 +4,7 @@ outline: deep
 
 # Update Image
 
-<ApiEndpoint method="PATCH" path="/images/:id" />
+<ApiEndpoint method="PUT" path="/images/:id" />
 
 Update an existing image. Only the attributes you include are changed.
 
@@ -30,7 +30,7 @@ Update an existing image. Only the attributes you include are changed.
 | `eventId`      | string |                              |
 | `workspaceId`  | string |                              |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -47,7 +47,7 @@ const image = await confetti.images.update(4242, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/images/4242" \
+curl -X PUT "https://api.confetti.events/images/4242" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

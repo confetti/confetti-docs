@@ -4,7 +4,7 @@ outline: deep
 
 # Update Sponsor
 
-<ApiEndpoint method="PATCH" path="/sponsors/:id" />
+<ApiEndpoint method="PUT" path="/sponsors/:id" />
 
 Update an existing sponsor. Only the attributes you include are changed.
 
@@ -19,7 +19,7 @@ Update an existing sponsor. Only the attributes you include are changed.
 | `order`          | string |             |
 | `imageId`        | string |             |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -36,7 +36,7 @@ const sponsor = await confetti.sponsors.update(5421, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/sponsors/5421" \
+curl -X PUT "https://api.confetti.events/sponsors/5421" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{

@@ -4,7 +4,7 @@ outline: deep
 
 # Update Sponsor Level
 
-<ApiEndpoint method="PATCH" path="/sponsor-levels/:id" />
+<ApiEndpoint method="PUT" path="/sponsor-levels/:id" />
 
 Update an existing sponsor level. Only the attributes you include are changed.
 
@@ -17,7 +17,7 @@ Update an existing sponsor level. Only the attributes you include are changed.
 | `style`   | string |             |
 | `order`   | string |             |
 
-> Fields marked with **\*** are required.
+> All attributes are optional.
 
 ## Request
 
@@ -34,7 +34,7 @@ const sponsorLevel = await confetti.sponsorLevels.update(882, {
 ```
 
 ```sh [cURL]
-curl -X PATCH "https://api.confetti.events/sponsor-levels/882" \
+curl -X PUT "https://api.confetti.events/sponsor-levels/882" \
   -H "Content-Type: application/json" \
   -H "Authorization: apikey your-key" \
   -d '{
